@@ -1,8 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { searchedBirdReducer } from "./slices/searchedBirdSlice";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { birdFormApi } from "./apis/birdFormApi";
 
 export const store = configureStore({
   reducer: {
-    searchedBird: searchedBirdReducer,
+    [birdFormApi.reducerPath]: birdFormApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(birdFormApi.middleware);
   },
 });
+
+setupListeners(store.dispatch);
+
+export { useUpdateBirdSearchedMutation } from "./apis/birdFormApi";
