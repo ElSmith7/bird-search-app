@@ -14,16 +14,14 @@ function SearchBird() {
     dispatch(changeName(event.target.value));
   };
 
+  //want to add in another input for number of birds seen and submit button
+
   return (
     <div className="bird-search">
       <form onSubmit={handleSubmit}>
         <div>
-          <label></label>
-          <input
-            placeholder="Search a Bird!"
-            value={name}
-            onChange={handleNameChange}
-          />
+          <label>Search Bird</label>
+          <input value={name} onChange={handleNameChange} />
         </div>
       </form>
     </div>
