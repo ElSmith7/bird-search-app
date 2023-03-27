@@ -6,14 +6,17 @@ function SearchBird() {
   const name = useSelector((state) => {
     return state.search.name;
   });
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // need to use addBird to send new bird to birdList store
+  };
   const handleNameChange = (event) => {
     dispatch(changeName(event.target.value));
   };
 
   return (
     <div className="bird-search">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label></label>
           <input
