@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { renderWithProviders } from "./utils-for-tests";
+import { screen } from "@testing-library/react";
+import { renderWithProviders } from "../utils/utils-for-tests";
 import App from "../App";
 
 test("displays the App's heading", () => {
@@ -13,6 +13,6 @@ test("displays the App's heading", () => {
 test("displays the search bird form", () => {
   renderWithProviders(<App />);
 
-  const searchForm = screen.getByText(/search bird/i);
+  const searchForm = screen.getByText(/new bird/i);
   expect(searchForm).toBeInTheDocument();
 });

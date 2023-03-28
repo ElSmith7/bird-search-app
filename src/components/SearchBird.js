@@ -20,8 +20,8 @@ function SearchBird() {
     <div className="bird-search">
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Search Bird</label>
-          <input value={name} onChange={handleNameChange} />
+          <label htmlFor="search">New Bird</label>
+          <input id="search" value={name} onChange={handleNameChange} />
         </div>
       </form>
     </div>
