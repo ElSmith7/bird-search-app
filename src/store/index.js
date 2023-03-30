@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { searchReducer, changeName } from "./slices/searchSlice";
+import { searchReducer, changeName, changeNumber } from "./slices/searchSlice";
 
 const store = configureStore({
   reducer: {
@@ -7,4 +7,4 @@ const store = configureStore({
   },
 });
 
-export { store, changeName };
+export { store, changeName, changeNumber };

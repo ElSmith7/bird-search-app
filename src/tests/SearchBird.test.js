@@ -6,10 +6,12 @@ import SearchBird from "../components/SearchBird";
 test("it shows two inputs and a button", () => {
   renderWithProviders(<SearchBird />);
 
-  const inputs = screen.getAllByRole("textbox");
+  const birdInput = screen.getByRole("textbox");
+  const numberInput = screen.getByRole("spinbutton");
   const button = screen.getByRole("button");
 
-  expect(inputs).toHaveLength(2);
+  expect(birdInput).toBeInTheDocument();
+  expect(numberInput).toBeInTheDocument();
   expect(button).toBeInTheDocument();
 });
 
@@ -19,7 +21,7 @@ test("calls addBird when form is submitted", async () => {
   renderWithProviders(<SearchBird addBird={mock} />);
 
   const birdInput = screen.findByRole("textbox", { name: /bird/i });
-  const numberInput = screen.findByRole("textbox", { name: /number/i });
+  const numberInput = screen.findByRole("spinbutton", { name: /number/i });
 
   user.click(birdInput);
   user.keyboard("gold finch");

@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeName } from "../store";
+import { changeName, changeNumber } from "../store";
 
 function SearchBird() {
   const dispatch = useDispatch();
   const name = useSelector((state) => {
     return state.search.name;
+  });
+  const number = useSelector((state) => {
+    return state.search.number;
   });
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,16 +16,32 @@ function SearchBird() {
   const handleNameChange = (event) => {
     dispatch(changeName(event.target.value));
   };
-
-  //want to add in another input for number of birds seen and submit button
+  const handleNumberChange = (event) => {
+    dispatch(changeNumber(event.target.value));
+  };
 
   return (
     <div className="bird-search">
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="search">New Bird</label>
-          <input id="search" value={name} onChange={handleNameChange} />
+          <input
+            id="search"
+            value={name}
+            type="text"
+            onChange={handleNameChange}
+          />
         </div>
+        <div>
+          <label htmlFor="number">Number Seen</label>
+          <input
+            id="number"
+            type="number"
+            value={number || ""}
+            onChange={handleNumberChange}
+          />
+        </div>
+        <button>Add</button>
       </form>
     </div>
   );
