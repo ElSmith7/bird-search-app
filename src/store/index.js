@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { searchReducer, changeName, changeNumber } from "./slices/searchSlice";
 import { birdListApi } from "./apis/birdListApi";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     search: searchReducer,
     [birdListApi.reducerPath]: birdListApi.reducer,
@@ -15,5 +15,5 @@ const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export { store, changeName, changeNumber } from "./slices/searchSlice";
-export { useFetchBirds } from "./apis/birdListApi";
+export { changeName, changeNumber };
+export { useFetchBirdsQuery } from "./apis/birdListApi";

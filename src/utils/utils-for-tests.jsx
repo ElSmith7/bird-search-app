@@ -14,6 +14,9 @@ export function renderWithProviders(
         search: searchReducer,
         [birdListApi.reducerPath]: birdListApi.reducer,
       },
+      middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(birdListApi.middleware);
+      },
       preloadedState,
     }),
     ...renderOptions

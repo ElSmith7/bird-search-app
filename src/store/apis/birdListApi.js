@@ -4,19 +4,14 @@ const birdListApi = createApi({
   reducerPath: "birdList",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3005",
-    endpoints(builder) {
-      return {
-        fetchBirds: builder.query({
-          query: () => {
-            return {
-              url: "/birds",
-              method: "GET",
-            };
-          },
-        }),
-      };
-    },
   }),
+  endpoints(builder) {
+    return {
+      fetchBirds: builder.query({
+        query: () => "/birds",
+      }),
+    };
+  },
 });
 
 export const { useFetchBirdsQuery } = birdListApi;
