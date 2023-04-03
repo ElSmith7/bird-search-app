@@ -1,17 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
+import { useAddBirdMutation } from "../store";
 
 function SearchBird() {
-  const dispatch = useDispatch(name, number);
-  const name = useSelector((state) => {
-    return state.search.name;
+  const [addBird, results] = useAddBirdMutation();
+  const dispatch = useDispatch();
+  const { name, number } = useSelector((state) => {
+    return {
+      name: state.search.name,
+      number: state.search.number,
+    };
   });
-  const number = useSelector((state) => {
-    return state.search.number;
-  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // need to use addBird to send new bird to birdList store
+    addBird({
+      name,
+      number,
+    });
   };
   const handleNameChange = (event) => {
     dispatch(changeName(event.target.value));
