@@ -16,4 +16,8 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export { changeName, changeNumber };
-export { useFetchBirdsQuery } from "./apis/birdListApi";
+export {
+  useFetchBirdsQuery,
+  useAddBirdMutation,
+  useRemoveBirdMutation,
+} from "./apis/birdListApi";

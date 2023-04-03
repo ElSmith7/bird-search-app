@@ -2,7 +2,8 @@
   "birds": [
     {
       "id": 1,
-      "name": "duck"
+      "name": "duck",
+      "number": "3"
     }
   ]
 }

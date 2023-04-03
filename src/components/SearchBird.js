@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 
 function SearchBird() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(name, number);
   const name = useSelector((state) => {
     return state.search.name;
   });
