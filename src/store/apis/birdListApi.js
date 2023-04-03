@@ -12,7 +12,7 @@ const birdListApi = createApi({
         query: () => "/birds",
       }),
       addBird: builder.mutation({
-        query: (name, number) => {
+        query: ({ name, number }) => {
           return {
             url: "/birds",
             method: "POST",
