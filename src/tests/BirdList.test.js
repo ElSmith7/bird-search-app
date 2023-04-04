@@ -9,8 +9,8 @@ const handlers = [
     return res(
       ctx.json({
         birds: [
-          { name: "blue tit", id: 1 },
-          { name: "grey heron", id: 2 },
+          { name: "blue tit", id: "1", number: "5" },
+          { name: "grey heron", id: "2", number: "1" },
         ],
       })
     );

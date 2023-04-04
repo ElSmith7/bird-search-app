@@ -1,7 +1,31 @@
 import { screen } from "@testing-library/react";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import user from "@testing-library/user-event";
 import SearchBird from "../components/SearchBird";
+
+const handlers = [
+  rest.get("/birds", (req, res, ctx) => {
+    return res(
+      ctx.json({
+        birds: [{ id: "4", name: "blue tit", number: "1" }],
+      }),
+      ctx.delay(150)
+    );
+  }),
+];
+const server = setupServer(...handlers);
+
+beforeAll(() => {
+  server.listen();
+});
+afterEach(() => {
+  server.resetHandlers();
+});
+afterAll(() => {
+  server.close();
+});
 
 test("it shows two inputs and a button", () => {
   renderWithProviders(<SearchBird />);
@@ -15,24 +39,23 @@ test("it shows two inputs and a button", () => {
   expect(button).toBeInTheDocument();
 });
 
-test("calls addBird when form is submitted", async () => {
-  const mock = jest.fn();
+test("adds a new bird after clicking the add button", async () => {
+  renderWithProviders(<SearchBird />);
+  expect(screen.queryByAltText("loader")).not.toBeInTheDocument();
 
-  renderWithProviders(<SearchBird addBird={mock} />);
-
-  const birdInput = screen.findByRole("textbox", { name: /bird/i });
-  const numberInput = screen.findByRole("spinbutton", { name: /number/i });
+  const birdInput = screen.getByRole("textbox", { name: /bird/i });
+  const numberInput = screen.getByRole("spinbutton", {
+    name: /number/i,
+  });
+  const button = screen.getByRole("button", { name: /add/i });
 
   user.click(birdInput);
-  user.keyboard("gold finch");
-
+  user.keyboard("blue tit");
   user.click(numberInput);
-  user.keyboard("6");
-
-  const button = screen.getByRole("button");
-
+  user.keyboard("1");
   user.click(button);
 
-  expect(mock).toHaveBeenCalled();
-  expect(mock).toHaveBeenCalledWith({ name: "gold finch", number: "6" });
+  expect(await screen.findByText(/blue tit/i)).toBeInTheDocument();
+  expect(await screen.findByText(/1/i)).toBeInTheDocument();
+  expect(loader).not.toBeInTheDocument();
 });
