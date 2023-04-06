@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import Panel from "./Panel";
 import { useFetchBirdsQuery } from "../store";
 
 function BirdList() {
   const { data, error, isLoading } = useFetchBirdsQuery();
 
-  return <div>Bird List</div>;
+  return (
+    <div>
+      <Panel>Bird List</Panel>
+    </div>
+  );
 }
 
 export default BirdList;
