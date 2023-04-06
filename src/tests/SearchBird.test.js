@@ -8,9 +8,7 @@ import SearchBird from "../components/SearchBird";
 const handlers = [
   rest.get("/birds", (req, res, ctx) => {
     return res(
-      ctx.json({
-        birds: [{ id: "4", name: "blue tit", number: "1" }],
-      }),
+      ctx.json([{ id: "4", name: "blue tit", number: "1" }]),
       ctx.delay(150)
     );
   }),
@@ -57,5 +55,7 @@ test("adds a new bird after clicking the add button", async () => {
 
   expect(await screen.findByText(/blue tit/i)).toBeInTheDocument();
   expect(await screen.findByText(/1/i)).toBeInTheDocument();
+  expect(birdInput).toHaveValue("");
+  expect(numberInput).toHaveValue("0" || "");
   expect(loader).not.toBeInTheDocument();
 });

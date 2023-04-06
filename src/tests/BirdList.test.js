@@ -7,12 +7,10 @@ import BirdList from "../components/BirdList";
 const handlers = [
   rest.get("/birds", (req, res, ctx) => {
     return res(
-      ctx.json({
-        birds: [
-          { name: "blue tit", id: "1", number: "5" },
-          { name: "grey heron", id: "2", number: "1" },
-        ],
-      })
+      ctx.json([
+        { name: "blue tit", id: "1", number: "5" },
+        { name: "grey heron", id: "2", number: "1" },
+      ])
     );
   }),
 ];
