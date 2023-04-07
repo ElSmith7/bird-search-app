@@ -1,7 +1,3 @@
 .panel {
   border: 3px green solid;
 }
-
-.panel .error {
-  border: 3px red solid;
-}

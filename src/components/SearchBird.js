@@ -16,8 +16,9 @@ function SearchBird() {
     event.preventDefault();
     addBird({ name, number });
     dispatch(changeName(""));
-    dispatch(changeNumber(0));
+    dispatch(changeNumber(""));
   };
+
   const handleNameChange = (event) => {
     dispatch(changeName(event.target.value));
   };

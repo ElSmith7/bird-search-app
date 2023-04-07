@@ -10,10 +10,14 @@ function BirdList() {
   if (isLoading) {
     content = <BeatLoader color="#36d7b7" />;
   } else if (error) {
-    content = <Panel className="error">Error Loading birds...</Panel>;
+    content = <Panel>Error Loading birds...</Panel>;
   } else {
     content = data.map((bird) => {
-      return <Panel key={bird.id}>{bird.name}</Panel>;
+      return (
+        <Panel key={bird.id}>
+          <h4>{bird.name}</h4>
+        </Panel>
+      );
     });
   }
 

@@ -5,26 +5,20 @@ import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdList from "../components/BirdList";
 
 const handlers = [
-  rest.get("/birds", (req, res, ctx) => {
+  rest.get("http://localhost:3005/birds", (req, res, ctx) => {
     return res(
       ctx.json([
-        { name: "blue tit", id: "1", number: "5" },
-        { name: "grey heron", id: "2", number: "1" },
+        { id: "1", name: "blue tit", number: "5" },
+        { id: "2", name: "grey heron", number: "1" },
       ])
     );
   }),
 ];
 const server = setupServer(...handlers);
 
-beforeAll(() => {
-  server.listen();
-});
-afterEach(() => {
-  server.resetHandlers();
-});
-afterAll(() => {
-  server.close();
-});
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("render the correct number of birds", async () => {
   renderWithProviders(<BirdList />);
@@ -36,7 +30,6 @@ test("render the correct number of birds", async () => {
 
 test("renders the heading with each bird's name", async () => {
   renderWithProviders(<BirdList />);
-  const birds = ["blue tit", "grey heron"];
 
   for (let bird of birds) {
     const headings = await screen.findByRole("header", {
