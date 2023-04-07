@@ -5,7 +5,7 @@ function Panel({ children, className, ...rest }) {
   const finalClassNames = classNames("panel", className);
 
   return (
-    <div {...rest} data-testid="panel" className={finalClassNames}>
+    <div {...rest} className={finalClassNames}>
       {children}
     </div>
   );

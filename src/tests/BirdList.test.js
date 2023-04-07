@@ -23,18 +23,22 @@ afterAll(() => server.close());
 test("render the correct number of birds", async () => {
   renderWithProviders(<BirdList />);
 
-  const birdList = await screen.findAllByTestId("panel");
+  const birdList = await screen.findAllByTestId("bird");
 
   expect(birdList).toHaveLength(2);
 });
 
 test("renders the heading with each bird's name", async () => {
   renderWithProviders(<BirdList />);
+  await screen.findAllByTestId("bird");
+
+  let birds = ["blue tit", "grey heron"];
 
   for (let bird of birds) {
-    const headings = await screen.findByRole("header", {
+    const headings = await screen.findByRole("heading", {
       name: new RegExp(`${bird}`),
     });
     expect(headings).toHaveTextContent(`${bird}`);
   }
 });
+

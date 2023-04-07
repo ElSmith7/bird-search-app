@@ -8,14 +8,17 @@ function BirdList() {
   let content;
 
   if (isLoading) {
-    content = <BeatLoader color="#36d7b7" />;
+    content = <BeatLoader data-testid="loader" color="#36d7b7" />;
   } else if (error) {
     content = <Panel>Error Loading birds...</Panel>;
   } else {
     content = data.map((bird) => {
       return (
-        <Panel key={bird.id}>
-          <h4>{bird.name}</h4>
+        <Panel data-testid="bird" key={bird.id}>
+          <h4>
+            {bird.name}
+            {bird.number}
+          </h4>
         </Panel>
       );
     });
