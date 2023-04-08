@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { renderWithProviders } from "../utils/utils-for-tests";
-import user from "@testing-library/user-event";
 import SearchBird from "../components/SearchBird";
 
 const handlers = [
@@ -32,27 +31,3 @@ test("it shows two inputs and a button", () => {
   expect(numberInput).toBeInTheDocument();
   expect(button).toBeInTheDocument();
 });
-
-// test("adds a new bird after clicking the add button", async () => {
-//   renderWithProviders(<SearchBird />);
-
-//   expect(screen.queryByText("loader")).not.toBeInTheDocument();
-
-//   const birdInput = screen.getByRole("textbox", { name: /bird/i });
-//   const numberInput = screen.getByRole("spinbutton", {
-//     name: /number/i,
-//   });
-//   const button = screen.getByRole("button", { name: /add/i });
-
-//   user.click(birdInput);
-//   user.keyboard("blue tit");
-//   user.click(numberInput);
-//   user.keyboard("1");
-//   user.click(button);
-
-//   // expect(await screen.findByText("blue tit")).toBeInTheDocument();
-//   // expect(await screen.findByText("1")).toBeInTheDocument();
-//   expect(await birdInput).toHaveValue("");
-//   expect(numberInput).toHaveValue("");
-//   expect(screen.queryByText("loader")).not.toBeInTheDocument();
-// });

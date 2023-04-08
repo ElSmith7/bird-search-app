@@ -1,4 +1,5 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
@@ -12,6 +13,9 @@ const handlers = [
         { id: "2", name: "grey heron", number: "1" },
       ])
     );
+  }),
+  rest.post("http://localhost:3005/birds", (req, res, ctx) => {
+    return res(ctx.json([{ id: "3", name: "european robin", number: "2" }]));
   }),
 ];
 const server = setupServer(...handlers);
@@ -48,4 +52,22 @@ test("fetches, loads and displays birdList", async () => {
 
   expect(birdList).toHaveLength(2);
   expect(loader).not.toBeInTheDocument();
+});
+
+test("adds new bird when form is submitted", async () => {
+  renderWithProviders(<App />);
+  await screen.findAllByTestId("bird");
+
+  const nameInput = screen.getByRole("textbox", { name: /bird/i });
+  const numberInput = screen.getByRole("spinbutton", {
+    name: /number/i,
+  });
+  const button = screen.getByRole("button", { name: /add/i });
+
+  userEvent.type(nameInput, "european robin");
+  userEvent.type(numberInput, "3");
+  userEvent.click(button);
+
+  await waitFor(() => screen.getByText("european robin"));
+  expect(screen.getByText("european robin")).toBeInTheDocument();
 });
