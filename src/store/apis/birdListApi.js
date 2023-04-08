@@ -9,9 +9,11 @@ const birdListApi = createApi({
   endpoints(builder) {
     return {
       fetchBirds: builder.query({
+        providesTags: ["Bird"],
         query: () => "/birds",
       }),
       addBird: builder.mutation({
+        invalidatesTags: ["Bird"],
         query: ({ name, number }) => {
           return {
             url: "/birds",
