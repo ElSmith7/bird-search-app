@@ -1,7 +1,6 @@
 import { screen } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import App from "../App";
 
@@ -24,6 +23,7 @@ afterAll(() => server.close());
 test("displays the App's heading", async () => {
   renderWithProviders(<App />);
   await screen.findAllByTestId("bird");
+
   const heading = screen.getByRole("heading", { name: /bird search/i });
 
   expect(heading).toBeInTheDocument();
@@ -32,12 +32,14 @@ test("displays the App's heading", async () => {
 test("displays the search bird form", async () => {
   renderWithProviders(<App />);
   await screen.findAllByTestId("bird");
+
   const searchForm = screen.getByRole("textbox", { name: /bird/i });
   expect(searchForm).toBeInTheDocument();
 });
 
 test("fetches, loads and displays birdList", async () => {
   renderWithProviders(<App />);
+
   const loader = screen.queryByTestId("loader");
 
   expect(loader).toBeInTheDocument();

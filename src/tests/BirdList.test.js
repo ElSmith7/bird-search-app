@@ -42,3 +42,16 @@ test("renders the heading with each bird's name", async () => {
   }
 });
 
+test("renders the correct number for each bird", async () => {
+  renderWithProviders(<BirdList />);
+  await screen.findAllByTestId("bird");
+
+  let numbers = ["5", "1"];
+
+  for (let number of numbers) {
+    const sightings = await screen.findByRole("heading", {
+      name: new RegExp(`${number}`),
+    });
+    expect(sightings).toHaveTextContent(`${number}`);
+  }
+});
