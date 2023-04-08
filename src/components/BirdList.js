@@ -1,4 +1,4 @@
-import BeatLoader from "react-spinners/BeatLoader";
+import Loader from "./Loader";
 import Panel from "./Panel";
 import { useFetchBirdsQuery } from "../store";
 
@@ -8,7 +8,7 @@ function BirdList() {
   let content;
 
   if (isLoading) {
-    content = <BeatLoader data-testid="loader" color="#36d7b7" />;
+    content = <Loader />;
   } else if (error) {
     content = <Panel>Error Loading birds...</Panel>;
   } else {

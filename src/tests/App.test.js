@@ -21,26 +21,29 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test("displays the App's heading", () => {
+test("displays the App's heading", async () => {
   renderWithProviders(<App />);
-
+  await screen.findAllByTestId("bird");
   const heading = screen.getByRole("heading", { name: /bird search/i });
 
   expect(heading).toBeInTheDocument();
 });
 
-test("displays the search bird form", () => {
+test("displays the search bird form", async () => {
   renderWithProviders(<App />);
-
-  const searchForm = screen.getByText(/new bird/i);
+  await screen.findAllByTestId("bird");
+  const searchForm = screen.getByRole("textbox", { name: /bird/i });
   expect(searchForm).toBeInTheDocument();
 });
 
 test("fetches, loads and displays birdList", async () => {
   renderWithProviders(<App />);
-  const birdList = await screen.findAllByTestId("bird");
-  const loader = await screen.queryByTestId("loader");
+  const loader = screen.queryByTestId("loader");
+
   expect(loader).toBeInTheDocument();
+
+  const birdList = await screen.findAllByTestId("bird");
+
   expect(birdList).toHaveLength(2);
   expect(loader).not.toBeInTheDocument();
 });
