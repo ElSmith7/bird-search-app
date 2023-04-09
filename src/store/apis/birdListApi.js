@@ -6,6 +6,7 @@ const birdListApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3005",
   }),
+  tagTypes: ["Bird"],
   endpoints(builder) {
     return {
       fetchBirds: builder.query({

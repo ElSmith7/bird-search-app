@@ -1,5 +1,5 @@
 import { screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import user from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
@@ -14,8 +14,8 @@ const handlers = [
       ])
     );
   }),
-  rest.post("http://localhost:3005/birds", (req, res, ctx) => {
-    return res(ctx.json([{ id: "3", name: "european robin", number: "2" }]));
+  rest.post("http://localhost:3005/birds", async (req, res, ctx) => {
+    return res(ctx.json({ name: "robin", number: "2" }));
   }),
 ];
 const server = setupServer(...handlers);
@@ -58,16 +58,22 @@ test("adds new bird when form is submitted", async () => {
   renderWithProviders(<App />);
   await screen.findAllByTestId("bird");
 
-  const nameInput = screen.getByRole("textbox", { name: /bird/i });
+  const birdInput = await screen.findByRole("textbox", { name: /bird/i });
+  const button = await screen.findByRole("button", { name: /add/i });
   const numberInput = screen.getByRole("spinbutton", {
     name: /number/i,
   });
-  const button = screen.getByRole("button", { name: /add/i });
 
-  userEvent.type(nameInput, "european robin");
-  userEvent.type(numberInput, "3");
-  userEvent.click(button);
+  user.click(birdInput);
+  user.keyboard("robin");
+  user.click(numberInput);
+  user.keyboard("2");
+  user.click(button);
 
-  await waitFor(() => screen.getByText("european robin"));
-  expect(screen.getByText("european robin")).toBeInTheDocument();
+  await waitFor(expect(screen.queryByTestId("loader").not.toBeInTheDocument()));
+  expect(birdInput).toHaveValue("");
+  expect(numberInput).toHaveValue("");
+
+  expect(await screen.findByText(/robin/i).toBeInTheDocument());
+  expect(await screen.findByText(/2/i).toBeInTheDocument());
 });
