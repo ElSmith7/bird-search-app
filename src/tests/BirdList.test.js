@@ -55,3 +55,20 @@ test("renders the correct number for each bird", async () => {
     expect(sightings).toHaveTextContent(`${number}`);
   }
 });
+test("renders the loader and error message when there's an error", async () => {
+  renderWithProviders(<BirdList />);
+
+  const loader = screen.queryByTestId("loader");
+
+  expect(loader).toBeInTheDocument();
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(ctx.status(403));
+    })
+  );
+  expect(loader).toBeInTheDocument();
+
+  expect(await screen.findByText(/error/i)).toBeInTheDocument();
+  expect(loader).not.toBeInTheDocument();
+  expect(screen.queryByTestId("bird")).not.toBeInTheDocument();
+});
