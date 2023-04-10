@@ -1,6 +1,7 @@
 import Loader from "./Loader";
 import Panel from "./Panel";
 import { useFetchBirdsQuery } from "../store";
+import Bird from "./Bird";
 
 function BirdList() {
   const { data, error, isLoading } = useFetchBirdsQuery();
@@ -13,14 +14,7 @@ function BirdList() {
     content = <Panel>Error Loading birds...</Panel>;
   } else {
     content = data.map((bird) => {
-      return (
-        <Panel data-testid="bird" key={bird.id}>
-          <h4>
-            {bird.name}
-            {bird.number}
-          </h4>
-        </Panel>
-      );
+      return <Bird bird={bird} />;
     });
   }
 

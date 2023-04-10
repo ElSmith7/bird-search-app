@@ -1,11 +1,6 @@
 {
   "birds": [
     {
-      "id": 1,
-      "name": "duck",
-      "number": "3"
-    },
-    {
       "id": "NMY0Cj7ZNchf9IQgSKgVC",
       "name": "canada goose",
       "number": "18"
@@ -14,16 +9,6 @@
       "id": "YvLB-tCS4ISHO4G4VgbAb",
       "name": "black cap",
       "number": "3"
-    },
-    {
-      "id": "fCbCCtNFehv7rhgzdpsXd",
-      "name": "pigion ",
-      "number": "2"
-    },
-    {
-      "id": "QJzPtaGumYnqJt-he-rbY",
-      "name": "dove",
-      "number": "2"
     }
   ]
 }

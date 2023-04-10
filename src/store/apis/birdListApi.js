@@ -28,6 +28,7 @@ const birdListApi = createApi({
         },
       }),
       removeBird: builder.mutation({
+        invalidatesTags: ["Bird"],
         query: (bird) => {
           return {
             url: `/birds/${bird.id}`,
