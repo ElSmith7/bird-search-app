@@ -14,8 +14,8 @@ const handlers = [
       ])
     );
   }),
-  rest.post("http://localhost:3005/birds", async (req, res, ctx) => {
-    return res(ctx.json({ name: "robin", number: "2" }));
+  rest.post("http://localhost:3005/birds", (req, res, ctx) => {
+    return res(ctx.json({ id: 3, name: "robin", number: "2" }));
   }),
 ];
 const server = setupServer(...handlers);
@@ -56,6 +56,10 @@ test("fetches, loads and displays birdList", async () => {
 
 test("adds new bird when form is submitted", async () => {
   renderWithProviders(<App />);
+  const loader = screen.queryByTestId("loader");
+
+  expect(loader).toBeInTheDocument();
+
   await screen.findAllByTestId("bird");
 
   const birdInput = await screen.findByRole("textbox", { name: /bird/i });
@@ -70,10 +74,24 @@ test("adds new bird when form is submitted", async () => {
   user.keyboard("2");
   user.click(button);
 
-  await waitFor(expect(screen.queryByTestId("loader").not.toBeInTheDocument()));
-  expect(birdInput).toHaveValue("");
-  expect(numberInput).toHaveValue("");
+  expect(loader).toBeInTheDocument();
 
-  expect(await screen.findByText(/robin/i).toBeInTheDocument());
-  expect(await screen.findByText(/2/i).toBeInTheDocument());
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(
+        ctx.json([
+          { id: "1", name: "blue tit", number: "5" },
+          { id: "2", name: "grey heron", number: "1" },
+          { id: "3", name: "robin", number: "2" },
+        ])
+      );
+    })
+  );
+
+  expect(await loader).not.toBeInTheDocument();
+  expect(birdInput).toHaveValue("");
+  expect(numberInput).toHaveValue(null);
+
+  expect(await screen.findByText(/robin/i)).toBeInTheDocument();
+  expect(await screen.findByText(/2/i)).toBeInTheDocument();
 });
