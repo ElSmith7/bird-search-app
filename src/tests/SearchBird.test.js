@@ -52,7 +52,8 @@ test("inputs clear after submit", async () => {
   expect(numberInput).toHaveValue(2);
 
   user.click(button);
-
-  expect(await screen.findByRole("textbox")).toHaveValue("");
-  expect(await screen.findByRole("spinbutton")).toHaveValue(null);
+  await waitFor(() => {
+    expect(screen.findByRole("textbox")).toHaveValue("");
+    expect(screen.findByRole("spinbutton")).toHaveValue(null);
+  });
 });

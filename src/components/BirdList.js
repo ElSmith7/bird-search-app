@@ -14,7 +14,7 @@ function BirdList() {
     content = <Panel>Error Loading birds...</Panel>;
   } else {
     content = data.map((bird) => {
-      return <Bird bird={bird} />;
+      return <Bird key={bird.id} bird={bird} />;
     });
   }
 

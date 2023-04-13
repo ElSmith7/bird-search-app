@@ -9,13 +9,15 @@ function Bird({ bird }) {
     removeBird(bird);
   };
   return (
-    <Panel data-testid="bird" key={bird.id}>
-      <button onClick={handleRemoveBird}>
-        <RxCross2 />
-      </button>
-      <h4>{bird.name}</h4>
-      <h4>{bird.number}</h4>
-    </Panel>
+    <>
+      <Panel data-testid="bird" key={bird.id}>
+        <button onClick={handleRemoveBird}>
+          <RxCross2 />
+        </button>
+        <h4>{bird.name}</h4>
+        <h4>{bird.number}</h4>
+      </Panel>
+    </>
   );
 }
 export default Bird;
