@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
@@ -56,17 +56,15 @@ test("fetches, loads and displays birdList", async () => {
 
 test("adds new bird when form is submitted", async () => {
   renderWithProviders(<App />);
-  const loader = screen.queryByTestId("loader");
 
-  expect(loader).toBeInTheDocument();
-
-  await screen.findAllByTestId("bird");
-
-  const birdInput = await screen.findByRole("textbox", { name: /bird/i });
-  const button = await screen.findByRole("button", { name: /add/i });
+  const loader = screen.queryByRole("button", { name: /button loader/i });
+  const birdInput = screen.getByRole("textbox", { name: /bird/i });
   const numberInput = screen.getByRole("spinbutton", {
     name: /number/i,
   });
+  const button = screen.getByRole("button", { name: /add/i });
+
+  await screen.findAllByTestId("bird");
 
   user.click(birdInput);
   user.keyboard("robin");
@@ -88,9 +86,9 @@ test("adds new bird when form is submitted", async () => {
     })
   );
 
-  expect(await loader).not.toBeInTheDocument();
-  expect(birdInput).toHaveValue("");
-  expect(numberInput).toHaveValue(null);
+  expect(loader).not.toBeInTheDocument();
+  expect(await screen.findByRole("spinbutton")).toHaveValue(null);
+  expect(await screen.findByRole("textbox")).toHaveValue("");
 
   expect(await screen.findByText(/robin/i)).toBeInTheDocument();
   expect(await screen.findByText(/2/i)).toBeInTheDocument();
