@@ -57,7 +57,7 @@ test("fetches, loads and displays birdList", async () => {
 test("adds new bird when form is submitted", async () => {
   renderWithProviders(<App />);
 
-  const loader = screen.queryByRole("button", { name: /button loader/i });
+  const loader = screen.queryByTestId(/button loader/i);
   const birdInput = screen.getByRole("textbox", { name: /bird/i });
   const numberInput = screen.getByRole("spinbutton", {
     name: /number/i,
@@ -72,7 +72,7 @@ test("adds new bird when form is submitted", async () => {
   user.keyboard("2");
   user.click(button);
 
-  expect(loader).toBeInTheDocument();
+  expect(await screen.findByTestId(/button loader/i)).toBeInTheDocument();
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {

@@ -1,9 +1,10 @@
+import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
 
 function SearchBird() {
-  const [addBird, results] = useAddBirdMutation();
+  const [addBird, addBirdResults] = useAddBirdMutation();
   const dispatch = useDispatch();
   const { name, number } = useSelector((state) => {
     return {
@@ -25,7 +26,7 @@ function SearchBird() {
   const handleNumberChange = (event) => {
     dispatch(changeNumber(event.target.value));
   };
-
+  const loading = addBirdResults.isLoading;
   return (
     <div className="bird-search">
       <form onSubmit={handleSubmit}>
@@ -47,7 +48,13 @@ function SearchBird() {
             onChange={handleNumberChange}
           />
         </div>
-        <button>Add</button>
+        <button>
+          {loading ? (
+            <ClipLoader color="#36d7b7" data-testid="button loader" />
+          ) : (
+            "Add"
+          )}
+        </button>
       </form>
     </div>
   );
