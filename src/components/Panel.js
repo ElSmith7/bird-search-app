@@ -1,4 +1,3 @@
-import "../styles/Panel.css";
 import classNames from "classnames";
 
 function Panel({ children, className, ...rest }) {

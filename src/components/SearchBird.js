@@ -2,6 +2,7 @@ import { ClipLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
+import Button from "./Button";
 
 function SearchBird() {
   const [addBird, addBirdResults] = useAddBirdMutation();
@@ -56,6 +57,18 @@ function SearchBird() {
           )}
         </button>
       </form>
+      <div>
+        <Button>Primary</Button>
+      </div>
+      <div>
+        <Button>Remove</Button>
+      </div>
+      <div>
+        <Button>Plus</Button>
+      </div>
+      <div>
+        <Button>Minus</Button>
+      </div>
     </div>
   );
 }
