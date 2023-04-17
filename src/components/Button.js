@@ -11,6 +11,7 @@ function Button({
   ...rest
 }) {
   const classes = className(
+    rest.className,
     "hover:opacity-75 m-1 px-3 py-1.5 rounded-full drop-shadow border",
     {
       "border-green-500 bg-green-500 text-white": primary,
