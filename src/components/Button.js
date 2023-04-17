@@ -16,7 +16,7 @@ function Button({
       "border-green-500 bg-green-500 text-white": primary,
       "border-green-500 bg-white text-gray-600": secondary,
       "px-1.5 py-1.5 border-green-500 bg-green-500 text-white": symbol,
-      "border-transparent bg-transparent drop-shadow-none text-gray-600":
+      "px-0 py-0 border-transparent bg-transparent drop-shadow-none text-gray-600":
         remove,
     }
   );
