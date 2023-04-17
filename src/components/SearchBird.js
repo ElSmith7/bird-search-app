@@ -1,4 +1,6 @@
 import { ClipLoader } from "react-spinners";
+import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMinus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
@@ -58,16 +60,24 @@ function SearchBird() {
         </button>
       </form>
       <div>
-        <Button>Primary</Button>
+        <Button primary>Primary</Button>
       </div>
       <div>
-        <Button>Remove</Button>
+        <Button remove>Remove</Button>
       </div>
       <div>
-        <Button>Plus</Button>
+        <Button symbol>
+          {" "}
+          <AiOutlinePlus />
+        </Button>
       </div>
       <div>
-        <Button>Minus</Button>
+        <Button symbol>
+          <AiOutlineMinus />
+        </Button>
+      </div>
+      <div>
+        <Button secondary>Secondary</Button>
       </div>
     </div>
   );
