@@ -1,6 +1,15 @@
 import className from "classnames";
+import { ClipLoader } from "react-spinners";
 
-function Button({ children, primary, secondary, symbol, remove }) {
+function Button({
+  children,
+  primary,
+  secondary,
+  symbol,
+  remove,
+  loading,
+  ...rest
+}) {
   const classes = className(
     "hover:opacity-75 m-1 px-3 py-1.5 rounded-full drop-shadow border",
     {
@@ -11,7 +20,20 @@ function Button({ children, primary, secondary, symbol, remove }) {
         remove,
     }
   );
-  return <button className={classes}>{children}</button>;
+  return (
+    <button
+      {...rest}
+      disabled={loading}
+      data-testid="button loader"
+      className={classes}
+    >
+      {loading ? (
+        <ClipLoader color="#00000" size={15} data-testid="button loader" />
+      ) : (
+        children
+      )}
+    </button>
+  );
 }
 
 Button.propTypes = {

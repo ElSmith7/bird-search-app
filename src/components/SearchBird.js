@@ -1,6 +1,3 @@
-import { ClipLoader } from "react-spinners";
-import { AiOutlinePlus } from "react-icons/ai";
-import { AiOutlineMinus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
@@ -29,7 +26,7 @@ function SearchBird() {
   const handleNumberChange = (event) => {
     dispatch(changeNumber(event.target.value));
   };
-  const loading = addBirdResults.isLoading;
+
   return (
     <div className="bird-search">
       <form onSubmit={handleSubmit}>
@@ -40,6 +37,7 @@ function SearchBird() {
             value={name}
             type="text"
             onChange={handleNameChange}
+            className="border"
           />
         </div>
         <div>
@@ -49,36 +47,14 @@ function SearchBird() {
             type="number"
             value={number || ""}
             onChange={handleNumberChange}
+            className="border"
           />
         </div>
-        <button>
-          {loading ? (
-            <ClipLoader color="#36d7b7" data-testid="button loader" />
-          ) : (
-            "Add"
-          )}
-        </button>
+
+        <Button primary loading={addBirdResults.isLoading}>
+          Add
+        </Button>
       </form>
-      <div>
-        <Button primary>Primary</Button>
-      </div>
-      <div>
-        <Button remove>Remove</Button>
-      </div>
-      <div>
-        <Button symbol>
-          {" "}
-          <AiOutlinePlus />
-        </Button>
-      </div>
-      <div>
-        <Button symbol>
-          <AiOutlineMinus />
-        </Button>
-      </div>
-      <div>
-        <Button secondary>Secondary</Button>
-      </div>
     </div>
   );
 }
