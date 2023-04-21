@@ -11,7 +11,7 @@ function Bird({ bird }) {
   };
   return (
     <>
-      <Panel data-testid="bird" key={bird.id}>
+      <Panel primary data-testid="bird" key={bird.id}>
         <Button
           onClick={handleRemoveBird}
           remove

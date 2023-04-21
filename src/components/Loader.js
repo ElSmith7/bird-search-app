@@ -1,12 +1,9 @@
 import BeatLoader from "react-spinners/BeatLoader";
-import classNames from "classnames";
 
-function Loader({ className, ...rest }) {
-  const finalClassNames = classNames(className);
-
+function Loader({ ...rest }) {
   return (
     <div data-testid="loader">
-      <BeatLoader color="#36d7b7" {...rest} className={finalClassNames} />
+      <BeatLoader color="#36d7b7" {...rest} />
     </div>
   );
 }

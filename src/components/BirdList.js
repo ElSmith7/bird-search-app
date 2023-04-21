@@ -18,7 +18,9 @@ function BirdList() {
     });
   }
 
-  return <div>{content}</div>;
+  return (
+    <div className="flex flex-col items-center justify-center">{content}</div>
+  );
 }
 
 export default BirdList;
