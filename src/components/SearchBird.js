@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
 import Button from "./Button";
+import Panel from "./Panel";
 
 function SearchBird() {
   const [addBird, addBirdResults] = useAddBirdMutation();
@@ -28,34 +29,36 @@ function SearchBird() {
   };
 
   return (
-    <div className="bird-search">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="search">New Bird</label>
-          <input
-            id="search"
-            value={name}
-            type="text"
-            onChange={handleNameChange}
-            className="border"
-          />
-        </div>
-        <div>
-          <label htmlFor="number">Number Seen</label>
-          <input
-            id="number"
-            type="number"
-            value={number || ""}
-            onChange={handleNumberChange}
-            className="border"
-          />
-        </div>
+    <>
+      <Panel primary className="bird-search mb-4">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="search">New Bird</label>
+            <input
+              id="search"
+              value={name}
+              type="text"
+              onChange={handleNameChange}
+              className="border"
+            />
+          </div>
+          <div>
+            <label htmlFor="number">Number Seen</label>
+            <input
+              id="number"
+              type="number"
+              value={number || ""}
+              onChange={handleNumberChange}
+              className="border"
+            />
+          </div>
 
-        <Button primary loading={addBirdResults.isLoading}>
-          Add
-        </Button>
-      </form>
-    </div>
+          <Button primary loading={addBirdResults.isLoading}>
+            Add
+          </Button>
+        </form>
+      </Panel>
+    </>
   );
 }
 
