@@ -37,11 +37,11 @@ const birdListApi = createApi({
         },
       }),
       updateSightings: builder.mutation({
-        query: ({ bird, updatedNumber }) => {
+        query: ({ bird, sightings }) => {
           return {
-            url: `/bird/${bird.id}`,
+            url: `/birds/${bird.id}`,
             method: "PATCH",
-            body: { number: updatedNumber },
+            body: { number: sightings },
           };
         },
       }),

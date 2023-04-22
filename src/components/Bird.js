@@ -21,7 +21,7 @@ function Bird({ bird }) {
           <RxCross2 />
         </Button>
         <h4>{bird.name}</h4>
-        <Sightings number={bird.number} />
+        <Sightings bird={bird} />
       </Panel>
     </>
   );
