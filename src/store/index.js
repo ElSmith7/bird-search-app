@@ -20,4 +20,5 @@ export {
   useFetchBirdsQuery,
   useAddBirdMutation,
   useRemoveBirdMutation,
+  useUpdateSightingsMutation,
 } from "./apis/birdListApi";
