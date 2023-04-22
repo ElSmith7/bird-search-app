@@ -2,6 +2,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useRemoveBirdMutation } from "../store";
 import Panel from "./Panel";
 import Button from "./Button";
+import Sightings from "./Sightings";
 
 function Bird({ bird }) {
   const [removeBird, removeBirdResults] = useRemoveBirdMutation();
@@ -19,9 +20,8 @@ function Bird({ bird }) {
         >
           <RxCross2 />
         </Button>
-
         <h4>{bird.name}</h4>
-        <h4>{bird.number}</h4>
+        <Sightings number={bird.number} />
       </Panel>
     </>
   );
