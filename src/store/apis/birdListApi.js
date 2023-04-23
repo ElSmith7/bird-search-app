@@ -37,6 +37,7 @@ const birdListApi = createApi({
         },
       }),
       updateSightings: builder.mutation({
+        invalidatesTags: ["Bird"],
         query: ({ bird, sightings }) => {
           return {
             url: `/birds/${bird.id}`,
