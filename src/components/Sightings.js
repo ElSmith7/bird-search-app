@@ -22,7 +22,7 @@ function Sightings({ bird }) {
       <Button symbol onClick={handleMinusSightings}>
         <AiOutlineMinus />
       </Button>
-      {bird.number}
+      <span className="inline-flex">{bird.number}</span>
       <Button symbol onClick={handleAddSightings}>
         <AiOutlinePlus />
       </Button>
