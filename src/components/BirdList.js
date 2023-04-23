@@ -8,6 +8,20 @@ function BirdList() {
   const { data, error, isLoading } = useFetchBirdsQuery();
   const { name } = useSelector((state) => state.search);
 
+  let birds = data;
+
+  if (name) {
+    const matchingBirds = birds.filter(
+      (bird) => bird.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+    );
+
+    const nonMatchingBirds = birds.filter(
+      (bird) => bird.name.toLowerCase().indexOf(name.toLowerCase()) === -1
+    );
+
+    birds = [...matchingBirds, ...nonMatchingBirds];
+  }
+
   let content;
 
   if (isLoading) {
@@ -15,13 +29,9 @@ function BirdList() {
   } else if (error) {
     content = <Panel error>Error Loading birds...</Panel>;
   } else {
-    content = data
-      .filter((bird) => {
-        return bird.name.includes(name);
-      })
-      .map((bird) => {
-        return <Bird key={bird.id} bird={bird} />;
-      });
+    content = birds.map((bird) => {
+      return <Bird key={bird.id} bird={bird} />;
+    });
   }
 
   return (
