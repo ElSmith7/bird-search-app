@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
+
 import Button from "./Button";
 import Panel from "./Panel";
 
@@ -17,6 +18,7 @@ function SearchBird() {
   const handleSubmit = (event) => {
     event.preventDefault();
     addBird({ name, number });
+
     dispatch(changeName(""));
     dispatch(changeNumber(""));
   };
