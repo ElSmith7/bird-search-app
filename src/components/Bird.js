@@ -3,6 +3,7 @@ import { useRemoveBirdMutation } from "../store";
 import Panel from "./Panel";
 import Button from "./Button";
 import Sightings from "./Sightings";
+import BirdImg from "./BirdImg";
 
 function Bird({ bird }) {
   const [removeBird, removeBirdResults] = useRemoveBirdMutation();
@@ -22,6 +23,7 @@ function Bird({ bird }) {
         </Button>
         <h4>{bird.name}</h4>
         <Sightings bird={bird} />
+        <BirdImg name={bird.name} />
       </Panel>
     </>
   );
