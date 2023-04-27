@@ -1,20 +1,27 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchBirdImg } from "../api/unsplash";
 
 function BirdImg({ name }) {
-  const [imgUrl, setImgUrl] = useState("");
+  const imgRef = useRef(null);
 
   useEffect(() => {
-    async function fetchImg() {
-      const results = await fetchBirdImg(name);
-      if (results.length > 0) {
-        setImgUrl(results[0].urls.thumb);
-      }
-    }
-    fetchImg();
-  }, []);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          fetchBirdImg(name).then((data) => {
+            imgRef.current.src = data[0].urls.thumb;
+          });
+          observer.unobserve(imgRef.current);
+        }
+      });
+    });
 
-  return <img src={imgUrl} alt={`${name} bird`} />;
+    observer.observe(imgRef.current);
+
+    return () => observer.disconnect();
+  }, [name]);
+
+  return <img ref={imgRef} className=" h-30 w-20" alt={name} />;
 }
 
 export default BirdImg;
