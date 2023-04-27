@@ -23,7 +23,7 @@ function Bird({ bird }) {
   };
 
   const actionBar = (
-    <div className="flex justify-between">
+    <>
       <Button primary onClick={handleClose}>
         Keep
       </Button>
@@ -31,7 +31,7 @@ function Bird({ bird }) {
       <Button secondary onClick={handleDelete}>
         Delete
       </Button>
-    </div>
+    </>
   );
 
   const modal = (
@@ -49,11 +49,12 @@ function Bird({ bird }) {
         >
           <RxCross2 />
         </Button>
-        {showModal && modal}
+
         <h4>{bird.name}</h4>
         <Sightings bird={bird} />
         <BirdImg name={bird.name} />
       </Panel>
+      {showModal && modal}
     </>
   );
 }
