@@ -11,6 +11,7 @@ function BirdImg({ name }) {
           fetchBirdImg(name).then((data) => {
             imgRef.current.src = data[0].urls.thumb;
           });
+
           observer.unobserve(imgRef.current);
         }
       });
@@ -21,7 +22,7 @@ function BirdImg({ name }) {
     return () => observer.disconnect();
   }, [name]);
 
-  return <img ref={imgRef} className=" h-30 w-20" alt={name} />;
+  return <img ref={imgRef} className="w-20" alt={name} />;
 }
 
 export default BirdImg;
