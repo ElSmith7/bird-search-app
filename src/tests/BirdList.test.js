@@ -4,6 +4,22 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdList from "../components/BirdList";
 
+jest.mock("axios", () => ({
+  get: jest.fn(),
+}));
+
+const mockAxiosResponse = {
+  data: {
+    results: [
+      {
+        urls: {
+          thumb: "https://picsum.photos/200/300",
+        },
+      },
+    ],
+  },
+};
+
 const handlers = [
   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
     return res(
