@@ -24,7 +24,7 @@ function Button({
   return (
     <button {...rest} disabled={loading} className={classes}>
       {loading ? (
-        <ClipLoader color="#00000" size={15} data-testid="button loader" />
+        <ClipLoader color="#00000" size={15} data-testid="button-loader" />
       ) : (
         children
       )}

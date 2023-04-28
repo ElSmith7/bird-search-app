@@ -22,7 +22,7 @@ function Modal({ onClose, children, actionBar }) {
           <div className="flex flex-col text-center h-full">
             {children}
             <div className="flex justify-center">{actionBar}</div>
-          </div>{" "}
+          </div>
         </Panel>
       </div>
     </div>,
