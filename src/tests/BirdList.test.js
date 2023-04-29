@@ -4,21 +4,26 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdList from "../components/BirdList";
 
-jest.mock("axios", () => ({
-  get: jest.fn(),
-}));
+// jest.mock("axios", () => ({
+//   get: jest.fn(),
+// }));
 
-const mockAxiosResponse = {
-  data: {
-    results: [
-      {
-        urls: {
-          thumb: "https://picsum.photos/200/300",
-        },
-      },
-    ],
-  },
-};
+// const mockAxiosResponse = {
+//   data: {
+//     results: [
+//       {
+//         urls: {
+//           thumb: "https://picsum.photos/200/300",
+//         },
+//       },
+//     ],
+//   },
+// };
+jest.mock("../components/BirdImg", () => {
+  return () => {
+    return "Bird Img Component";
+  };
+});
 
 const handlers = [
   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
@@ -65,9 +70,7 @@ test("renders the correct number for each bird", async () => {
   let numbers = ["5", "1"];
 
   for (let number of numbers) {
-    const sightings = await screen.findByRole("heading", {
-      name: new RegExp(`${number}`),
-    });
+    const sightings = await screen.findByTestId(`${number}`);
     expect(sightings).toHaveTextContent(`${number}`);
   }
 });
