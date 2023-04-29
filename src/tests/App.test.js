@@ -5,6 +5,12 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import App from "../App";
 
+jest.mock("../components/BirdImg", () => {
+  return () => {
+    return "Bird Img Component";
+  };
+});
+
 const handlers = [
   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
     return res(
@@ -72,7 +78,7 @@ test("adds new bird when form is submitted", async () => {
   user.keyboard("2");
   user.click(button);
 
-  expect(await screen.findByTestId(/button loader/i)).toBeInTheDocument();
+  expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {
