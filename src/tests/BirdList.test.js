@@ -4,21 +4,6 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdList from "../components/BirdList";
 
-// jest.mock("axios", () => ({
-//   get: jest.fn(),
-// }));
-
-// const mockAxiosResponse = {
-//   data: {
-//     results: [
-//       {
-//         urls: {
-//           thumb: "https://picsum.photos/200/300",
-//         },
-//       },
-//     ],
-//   },
-// };
 jest.mock("../components/BirdImg", () => {
   return () => {
     return "Bird Img Component";
