@@ -31,7 +31,7 @@ const mockResponse = {
     ],
   },
 };
-test("shows the correct bird image", async () => {
+test("shows the bird image", async () => {
   axios.get.mockResolvedValue(mockResponse);
 
   renderWithProviders(<BirdImg />);
