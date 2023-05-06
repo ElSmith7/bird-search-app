@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import axios from "axios";
-
 import BirdImg from "../components/BirdImg";
+import { fetchBirdImg } from "../api/unsplash";
 
 class IntersectionObserver {
   observe() {
@@ -19,8 +19,11 @@ window.IntersectionObserver = IntersectionObserver;
 jest.mock("axios", () => ({
   get: jest.fn(),
 }));
+jest.mock("../api/unsplash", () => ({
+  fetchBirdImg: jest.fn(),
+}));
 
-const mockResponse = {
+const mockLoadedResponse = {
   data: {
     results: [
       {
@@ -31,10 +34,36 @@ const mockResponse = {
     ],
   },
 };
-test("shows the bird image", async () => {
-  axios.get.mockResolvedValue(mockResponse);
+test("shows the image", async () => {
+  axios.get.mockResolvedValue(mockLoadedResponse);
 
   renderWithProviders(<BirdImg />);
   const birdImage = await screen.findByRole("img");
+  console.log(birdImage);
   expect(birdImage).toBeInTheDocument();
+});
+describe("fetchBirdImg", () => {
+  describe("when api call is successful", () => {
+    it("should return the correct bird img", async () => {
+      fetchBirdImg.mockResolvedValue(mockLoadedResponse);
+
+      renderWithProviders(<BirdImg name="robin" />);
+
+      const birdImage = screen.queryByRole("img");
+      expect(birdImage.src).toBe(
+        "https://via.placeholder.com/200x300/86efac?text=Loading..."
+      );
+      await waitFor(
+        () => {
+          expect(birdImage.src).not.toBe(
+            "https://via.placeholder.com/200x300/86efac?text=Loading..."
+          );
+          expect(birdImage.src).toBe(
+            mockLoadedResponse.data.results[0].urls.thumb
+          );
+        },
+        { timeout: 4000 }
+      );
+    });
+  });
 });
