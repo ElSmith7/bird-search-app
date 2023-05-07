@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { fetchBirdImg } from "../api/unsplash";
 function BirdImg({ name }) {
   const [imgUrl, setImgUrl] = useState("");
@@ -10,8 +11,16 @@ function BirdImg({ name }) {
       }
     }
     fetchImg();
-  }, []);
-  return <img src={imgUrl} alt={`${name} bird`} />;
+  }, [name]);
+  return (
+    <div>
+      <LazyLoadImage
+        src={imgUrl}
+        alt={name}
+        PlaceholderSrc="https://via.placeholder.com/200x300/86efac?text=Loading..."
+      />
+    </div>
+  );
 }
 export default BirdImg;
 
