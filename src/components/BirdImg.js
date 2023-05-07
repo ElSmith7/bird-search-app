@@ -3,22 +3,21 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { fetchBirdImg } from "../api/unsplash";
 function BirdImg({ name }) {
   const [imgUrl, setImgUrl] = useState("");
+  const [placeholder, setPlaceholder] = useState();
   useEffect(() => {
     async function fetchImg() {
       const results = await fetchBirdImg(name);
       if (results.length > 0) {
         setImgUrl(results[0].urls.thumb);
+        setPlaceholder(results[0].blur_hash);
       }
     }
     fetchImg();
   }, [name]);
+
   return (
     <div>
-      <LazyLoadImage
-        src={imgUrl}
-        alt={name}
-        PlaceholderSrc="https://via.placeholder.com/200x300/86efac?text=Loading..."
-      />
+      <LazyLoadImage src={imgUrl} alt={name} placeholderSrc={placeholder} />
     </div>
   );
 }
