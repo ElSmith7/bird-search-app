@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { decode } from "blurhash";
 import { fetchBirdImg } from "../api/unsplash";
 function BirdImg({ name }) {
   const [imgUrl, setImgUrl] = useState("");
-  const [blurhash, setBlurhash] = useState("");
 
   useEffect(() => {
     async function fetchImg() {
@@ -16,27 +14,13 @@ function BirdImg({ name }) {
     fetchImg();
   }, [name]);
 
-  useEffect(() => {
-    async function fetchBlurHash() {
-      const results = await fetchBirdImg(name);
-      if (results.length > 0) {
-        const pixels = decode(results[0].blur_hash, 32, 32);
-        const placeholderCanvas = document.createElement("canvas");
-        placeholderCanvas.width = 200;
-        placeholderCanvas.height = 300;
-        const ctx = placeholderCanvas.getContext("2d");
-        const imageData = ctx.createImageData(32, 32);
-        imageData.data.set(pixels);
-        ctx.putImageData(imageData, 0, 0);
-        setBlurhash(placeholderCanvas.toDataURL());
-      }
-    }
-    fetchBlurHash();
-  }, [name]);
-
   return (
     <div>
-      <LazyLoadImage src={imgUrl} alt={name} placeholderSrc={blurhash} />
+      <LazyLoadImage
+        src={imgUrl}
+        alt={name}
+        placeholderSrc="https://via.placeholder.com/200x300/86efac?text=Loading..."
+      />
     </div>
   );
 }
