@@ -1,27 +1,71 @@
 import { useState, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { decode } from "blurhash";
 import { fetchBirdImg } from "../api/unsplash";
 function BirdImg({ name }) {
   const [imgUrl, setImgUrl] = useState("");
-  const [placeholder, setPlaceholder] = useState();
+  const [blurhash, setBlurhash] = useState("");
+
   useEffect(() => {
     async function fetchImg() {
       const results = await fetchBirdImg(name);
       if (results.length > 0) {
         setImgUrl(results[0].urls.thumb);
-        setPlaceholder(results[0].blur_hash);
       }
     }
     fetchImg();
   }, [name]);
 
+  useEffect(() => {
+    async function fetchBlurHash() {
+      const results = await fetchBirdImg(name);
+      if (results.length > 0) {
+        const pixels = decode(results[0].blur_hash, 32, 32);
+        const placeholderCanvas = document.createElement("canvas");
+        placeholderCanvas.width = 200;
+        placeholderCanvas.height = 300;
+        const ctx = placeholderCanvas.getContext("2d");
+        const imageData = ctx.createImageData(32, 32);
+        imageData.data.set(pixels);
+        ctx.putImageData(imageData, 0, 0);
+        setBlurhash(placeholderCanvas.toDataURL());
+      }
+    }
+    fetchBlurHash();
+  }, [name]);
+
   return (
     <div>
-      <LazyLoadImage src={imgUrl} alt={name} placeholderSrc={placeholder} />
+      <LazyLoadImage src={imgUrl} alt={name} placeholderSrc={blurhash} />
     </div>
   );
 }
+
 export default BirdImg;
+
+// useEffect(() => {
+//   async function fetchPlaceHolder() {
+//     const results = await fetchBirdImg(name);
+//     if (results.length > 0) {
+//       setBlurhash(results[0].blur_hash);
+//     }
+//   }
+//   fetchPlaceHolder();
+// }, [name]);
+
+//   return (
+//     <div>
+//       {blurhash && (
+//         <LazyLoadImage
+//           src={blurhash}
+//           alt={name}
+//           placeholderrc={<BlurhashCanvas hash={blurhash} width={200} />}
+//         />
+//       )}
+//     </div>
+//   );
+// }
+// export default BirdImg;
 
 // import { useEffect, useRef, useState } from "react";
 // import { fetchBirdImg } from "../api/unsplash";
