@@ -33,25 +33,32 @@ function SearchBird() {
   return (
     <>
       <Panel primary className="bird-search mb-4">
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="search">New Bird</label>
+        <form
+          className="w-full max-w-lg flex flex-wrap -mx-3 mb-6"
+          onSubmit={handleSubmit}
+        >
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label className="block font-bold" htmlFor="search">
+              New Bird
+            </label>
             <input
               id="search"
               value={name}
               type="text"
               onChange={handleNameChange}
-              className="border"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-green-500"
             />
           </div>
-          <div>
-            <label htmlFor="number">Number Seen</label>
+          <div className="w-full md:w-1/2 px-3">
+            <label className="block font-bold" htmlFor="number">
+              Number Seen
+            </label>
             <input
               id="number"
               type="number"
               value={number || ""}
               onChange={handleNumberChange}
-              className="border"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-green-500"
             />
           </div>
 

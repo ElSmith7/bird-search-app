@@ -3,11 +3,11 @@ import className from "classnames";
 function Panel({ primary, secondary, error, remove, children, ...rest }) {
   const classes = className(
     rest.className,
-    "w-4/5 md:w-3/5 lg:w-2/5 my-2 px-5 py-3 mx-0 border-2 rounded drop-shadow",
+    "w-4/5 md:w-3/5 lg:w-2/5 my-2 px-5 py-3 mx-0 border-2 rounded drop-shadow bg-white text-slate-700",
     {
-      "bg-white border-green-500": primary,
-      "bg-white border-orange-500": error,
-      "bg-white border-red-500": remove,
+      "border-green-500": primary,
+      "border-orange-500": error,
+      "border-red-500": remove,
     }
   );
 
