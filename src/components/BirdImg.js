@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { fetchBirdImg } from "../api/unsplash";
+import LazyImg from "./LazyImg";
+
 function BirdImg({ name }) {
   const [imgUrl, setImgUrl] = useState("");
 
@@ -15,95 +16,10 @@ function BirdImg({ name }) {
   }, [name]);
 
   return (
-    <div>
-      <LazyLoadImage
-        src={imgUrl}
-        alt={name}
-        placeholderSrc="https://via.placeholder.com/200x300/86efac?text=Loading..."
-      />
+    <div className="w-1/3">
+      <LazyImg src={imgUrl} height={3} width={2} />
     </div>
   );
 }
 
 export default BirdImg;
-
-// useEffect(() => {
-//   async function fetchPlaceHolder() {
-//     const results = await fetchBirdImg(name);
-//     if (results.length > 0) {
-//       setBlurhash(results[0].blur_hash);
-//     }
-//   }
-//   fetchPlaceHolder();
-// }, [name]);
-
-//   return (
-//     <div>
-//       {blurhash && (
-//         <LazyLoadImage
-//           src={blurhash}
-//           alt={name}
-//           placeholderrc={<BlurhashCanvas hash={blurhash} width={200} />}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-// export default BirdImg;
-
-// import { useEffect, useRef, useState } from "react";
-// import { fetchBirdImg } from "../api/unsplash";
-
-// function BirdImg({ name }) {
-//   const imgRef = useRef(null);
-//   const [loaded, setLoaded] = useState(false);
-//   const [error, setError] = useState(false);
-
-//   useEffect(() => {
-//     const observer = new IntersectionObserver((entries) => {
-//       entries.forEach((entry) => {
-//         if (entry.isIntersecting) {
-//           fetchBirdImg(name).then((data) => {
-//             imgRef.current.src = data[0].urls.thumb;
-//             setLoaded(true);
-//           });
-
-//           observer.unobserve(imgRef.current);
-//         }
-//       });
-//     });
-
-//     observer.observe(imgRef.current);
-
-//     return () => observer.disconnect();
-//   }, [name]);
-
-//   let imgSrc;
-
-//   if (loaded === false) {
-//     imgSrc = `https://via.placeholder.com/200x300/86efac?text=Loading...`;
-//   }
-//   if (loaded) {
-//     imgSrc = imgRef.current.src;
-//   }
-//   if (error === true) {
-//     imgSrc = `https://via.placeholder.com/200x300/86efac?text=Error`;
-//   }
-
-//   return (
-//     <img
-//       ref={imgRef}
-//       onLoad={() => {
-//         setLoaded(true);
-//       }}
-//       onError={() => {
-//         setError(true);
-//       }}
-//       src={imgSrc}
-//       alt={name}
-//       className="w-20"
-//     />
-//   );
-// }
-
-// export default BirdImg;
