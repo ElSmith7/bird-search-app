@@ -32,12 +32,12 @@ function SearchBird() {
 
   return (
     <>
-      <Panel primary className="bird-search mb-4">
+      <Panel primary className="bird-search mb-5">
         <form
-          className="w-full max-w-lg flex flex-wrap -mx-3 mb-6"
+          className="w-full max-w-lg flex flex-wrap"
           onSubmit={handleSubmit}
         >
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div className="w-full md:w-2/5 px-3">
             <label className="block font-bold" htmlFor="search">
               New Bird
             </label>
@@ -46,10 +46,10 @@ function SearchBird() {
               value={name}
               type="text"
               onChange={handleNameChange}
-              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-green-500"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full md:w-2/5 px-3">
             <label className="block font-bold" htmlFor="number">
               Number Seen
             </label>
@@ -58,14 +58,15 @@ function SearchBird() {
               type="number"
               value={number || ""}
               onChange={handleNumberChange}
-              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-green-500"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-3 px-4 mb-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
-
-          <Button primary loading={addBirdResults.isLoading}>
+        </form>
+        <div className="flex flex-col justify-center items-center md:inline-block md:w-1/5">
+          <Button primary className=" w-1/2" loading={addBirdResults.isLoading}>
             Add
           </Button>
-        </form>
+        </div>
       </Panel>
     </>
   );
