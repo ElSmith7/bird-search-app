@@ -34,10 +34,10 @@ function SearchBird() {
     <>
       <Panel primary className="bird-search mb-5">
         <form
-          className="flex flex-row flex-wrap justify-between"
+          className="md:flex md:flex-row md:flex-wrap md:justify-between"
           onSubmit={handleSubmit}
         >
-          <div className="basis-2/5">
+          <div className="md:basis-2/5">
             <label className="block font-bold" htmlFor="search">
               New Bird
             </label>
@@ -49,7 +49,7 @@ function SearchBird() {
               className="border border-2 block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
-          <div className="basis-2/5">
+          <div className="mt-4 md:mt-0 md:basis-2/5">
             <label className="block font-bold" htmlFor="number">
               Number Seen
             </label>
@@ -61,8 +61,12 @@ function SearchBird() {
               className="border border-2 block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
-          <div className="w-1/6 grid place-content-center mt-7">
-            <Button primary loading={addBirdResults.isLoading}>
+          <div className="grid place-content-center mt-7 md:basis-1/6">
+            <Button
+              primary
+              className="px-10 md:px-3"
+              loading={addBirdResults.isLoading}
+            >
               Add
             </Button>
           </div>
