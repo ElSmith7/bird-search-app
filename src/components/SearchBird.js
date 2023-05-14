@@ -46,7 +46,7 @@ function SearchBird() {
               value={name}
               type="text"
               onChange={handleNameChange}
-              className="border block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
           <div className="basis-2/5">
@@ -58,7 +58,7 @@ function SearchBird() {
               type="number"
               value={number || ""}
               onChange={handleNumberChange}
-              className="border block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
+              className="border border-2 block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
           <div className="w-1/6 grid place-content-center mt-7">

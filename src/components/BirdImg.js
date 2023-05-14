@@ -16,7 +16,7 @@ function BirdImg({ name }) {
   }, [name]);
 
   return (
-    <div className="w-1/3">
+    <div className="w-1/4">
       <LazyImg src={imgUrl} height={3} width={2} />
     </div>
   );

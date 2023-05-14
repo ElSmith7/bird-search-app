@@ -25,7 +25,12 @@ const LazyImage = ({ width, height, src, ...rest }) => {
           width={width}
           height={height}
           loading="lazy"
-          style={{ position: "absolute", width: "100%", height: "100%" }}
+          style={{
+            position: "absolute",
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+          }}
         />
       ) : null}
     </div>
