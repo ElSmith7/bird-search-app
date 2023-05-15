@@ -38,7 +38,10 @@ function SearchBird() {
           onSubmit={handleSubmit}
         >
           <div className="md:basis-2/5">
-            <label className="block font-bold" htmlFor="search">
+            <label
+              className="block font-bold text-slate-700/75"
+              htmlFor="search"
+            >
               New Bird
             </label>
             <input
@@ -50,7 +53,10 @@ function SearchBird() {
             />
           </div>
           <div className="mt-4 md:mt-0 md:basis-2/5">
-            <label className="block font-bold" htmlFor="number">
+            <label
+              className="block font-bold text-slate-700/75"
+              htmlFor="number"
+            >
               Number Seen
             </label>
             <input
