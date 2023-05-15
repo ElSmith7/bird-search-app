@@ -41,18 +41,31 @@ function Bird({ bird }) {
   );
   return (
     <>
-      <Panel primary data-testid="bird" key={bird.id}>
-        <Button
-          onClick={handleRemoveBird}
-          remove
-          loading={removeBirdResults.isLoading}
-        >
-          <RxCross2 />
-        </Button>
+      <Panel
+        primary
+        data-testid="bird"
+        key={bird.id}
+        className="grid grid-cols-5 gap-5"
+      >
+        <div className="col-span-2">
+          <BirdImg name={bird.name} />
+        </div>
 
-        <h4>{bird.name}</h4>
-        <Sightings bird={bird} />
-        <BirdImg name={bird.name} />
+        <div className="col-span-2 grid content-around -ml-8">
+          <h4 className="font-bold text-3xl capitalize">{bird.name}</h4>
+          <div>
+            <Sightings bird={bird} />
+          </div>
+        </div>
+        <div className="col-span-1 justify-self-end">
+          <Button
+            onClick={handleRemoveBird}
+            remove
+            loading={removeBirdResults.isLoading}
+          >
+            <RxCross2 />
+          </Button>
+        </div>
       </Panel>
       {showModal && modal}
     </>
