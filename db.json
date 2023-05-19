@@ -1,11 +1,6 @@
 {
   "birds": [
     {
-      "id": "t3ujZcAdqTS6EY9lSa66Y",
-      "name": "pigeon",
-      "number": "5"
-    },
-    {
       "id": "oUHpK5t7IUtDjiJd9woGp",
       "name": "blue tit",
       "number": "4"
@@ -23,6 +18,11 @@
     {
       "id": "LlGLhno8TmaFERNqXtpYh",
       "name": "green finch",
+      "number": "4"
+    },
+    {
+      "id": "jNPIB1j48J2cna7MoKP3R",
+      "name": "Pigeon",
       "number": "4"
     }
   ]
