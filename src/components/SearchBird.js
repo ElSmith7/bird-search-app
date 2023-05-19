@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { changeName, changeNumber } from "../store";
 import { useAddBirdMutation } from "../store";
-
 import Button from "./Button";
 import Panel from "./Panel";
+import Modal from "./Modal";
 
 function SearchBird() {
   const [addBird, addBirdResults] = useAddBirdMutation();
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+
   const { name, number } = useSelector((state) => {
     return {
       name: state.search.name,
@@ -17,10 +20,14 @@ function SearchBird() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addBird({ name, number });
+    if (name.length || number.length >= 1) {
+      addBird({ name, number });
 
-    dispatch(changeName(""));
-    dispatch(changeNumber(""));
+      dispatch(changeName(""));
+      dispatch(changeNumber(""));
+    } else {
+      setShowModal(true);
+    }
   };
 
   const handleNameChange = (event) => {
@@ -29,6 +36,23 @@ function SearchBird() {
   const handleNumberChange = (event) => {
     dispatch(changeNumber(event.target.value));
   };
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const actionBar = (
+    <>
+      <Button primary onClick={handleClose}>
+        OK
+      </Button>
+    </>
+  );
+
+  const modal = (
+    <Modal actionBar={actionBar} onClose={handleClose}>
+      <p>Please enter a bird and the number seen!</p>
+    </Modal>
+  );
 
   return (
     <>
@@ -78,6 +102,7 @@ function SearchBird() {
           </div>
         </form>
       </Panel>
+      {showModal && modal}
     </>
   );
 }
