@@ -17,11 +17,13 @@ function Modal({ onClose, children, actionBar }) {
         className="fixed inset-0 bg-gray-300 opacity-80"
       ></div>
 
-      <div className="fixed inset-0">
+      <div className="grid fixed content-center inset-0">
         <Panel className="mx-auto" remove>
-          <div className="flex flex-col text-center h-full">
+          <div className="flex flex-col h-full text-center text-lg font-semibold">
             {children}
-            <div className="flex justify-center">{actionBar}</div>
+            <div className="flex justify-center mt-5 font-normal">
+              {actionBar}
+            </div>
           </div>
         </Panel>
       </div>
