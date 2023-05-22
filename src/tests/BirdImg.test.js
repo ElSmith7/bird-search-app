@@ -39,5 +39,4 @@ test("renders bird image", async () => {
       "https://via.placeholder.com/300x300.png?text=robin"
     );
   });
-  screen.debug();
 });

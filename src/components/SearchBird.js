@@ -36,6 +36,21 @@ function SearchBird() {
   const handleNumberChange = (event) => {
     dispatch(changeNumber(event.target.value));
   };
+
+  const preventMinus = (e) => {
+    if (e.code === "Minus") {
+      e.preventDefault();
+    }
+  };
+
+  const preventPasteNegative = (e) => {
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedData = parseFloat(clipboardData.getData("text"));
+
+    if (pastedData < 0) {
+      e.preventDefault();
+    }
+  };
   const handleClose = () => {
     setShowModal(false);
   };
@@ -87,7 +102,10 @@ function SearchBird() {
               id="number"
               type="number"
               value={number || ""}
+              min="1"
               onChange={handleNumberChange}
+              onPaste={preventPasteNegative}
+              onKeyPress={preventMinus}
               className="border border-2 block w-full mt-2 text-gray-700 rounded py-2 px-3 focus:outline-none focus:border-gray-300 focus:drop-shadow"
             />
           </div>
