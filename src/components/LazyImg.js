@@ -11,6 +11,7 @@ const LazyImage = ({ width, height, color, src, ...rest }) => {
 
   return (
     <div
+      data-testid="background"
       ref={ref}
       style={{
         position: "relative",
