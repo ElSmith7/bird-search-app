@@ -1,7 +1,7 @@
 import useNativeLazyLoading from "@charlietango/use-native-lazy-loading";
 import { useInView } from "react-intersection-observer";
 
-const LazyImage = ({ width, height, src, ...rest }) => {
+const LazyImage = ({ width, height, color, src, ...rest }) => {
   const supportsLazyLoading = useNativeLazyLoading();
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -15,7 +15,7 @@ const LazyImage = ({ width, height, src, ...rest }) => {
       style={{
         position: "relative",
         paddingBottom: `${(height / width) * 100}%`,
-        background: "#22C55E",
+        background: `#${color}`,
       }}
     >
       {inView || supportsLazyLoading ? (
