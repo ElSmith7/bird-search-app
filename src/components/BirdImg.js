@@ -22,7 +22,7 @@ function BirdImg({ name }) {
 
   return (
     <div className="w-2/3">
-      <LazyImg src={imgUrl} height={3} width={2} color={color} />
+      <LazyImg src={imgUrl} height={3} width={2} color={color} alt={name} />
     </div>
   );
 }

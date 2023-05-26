@@ -25,7 +25,7 @@ test("renders bird image", async () => {
 
   renderWithProviders(<BirdImg name="robin" />);
   mockAllIsIntersecting(true);
-  const birdImage = await screen.findByRole("img");
+  const birdImage = screen.getByRole("img");
 
   await waitFor(() => {
     expect(birdImage).toBeInTheDocument();

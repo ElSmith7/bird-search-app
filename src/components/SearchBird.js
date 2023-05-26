@@ -37,6 +37,10 @@ function SearchBird() {
     dispatch(changeNumber(event.target.value));
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   const preventMinus = (e) => {
     if (e.code === "Minus") {
       e.preventDefault();
@@ -50,9 +54,6 @@ function SearchBird() {
     if (pastedData < 0) {
       e.preventDefault();
     }
-  };
-  const handleClose = () => {
-    setShowModal(false);
   };
 
   const actionBar = (
