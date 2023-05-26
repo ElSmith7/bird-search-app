@@ -20,7 +20,7 @@ function SearchBird() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (name.length || number.length >= 1) {
+    if (name.length && number.length >= 1) {
       addBird({ name, number });
 
       dispatch(changeName(""));

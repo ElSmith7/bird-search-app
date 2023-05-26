@@ -8,7 +8,7 @@ function Sightings({ bird }) {
     useUpdateSightingsMutation();
 
   const handleMinusSightings = () => {
-    const sightings = String(parseInt(bird.number) - 1);
+    const sightings = String(Math.max(1, parseInt(bird.number) - 1));
     updateSightings({ bird, sightings });
   };
 
