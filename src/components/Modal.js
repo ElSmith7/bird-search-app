@@ -18,7 +18,7 @@ function Modal({ onClose, children, actionBar }) {
       ></div>
 
       <div className="grid fixed content-center inset-0">
-        <Panel className="mx-auto" remove>
+        <Panel data-testid="modal" className="mx-auto" remove>
           <div className="flex flex-col h-full text-center text-lg font-semibold">
             {children}
             <div className="flex justify-center mt-5 font-normal">
