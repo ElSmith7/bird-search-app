@@ -15,6 +15,7 @@ function Modal({ onClose, children, actionBar }) {
       <div
         onClick={onClose}
         className="fixed inset-0 bg-gray-200 opacity-80"
+        data-testid="modal-background"
       ></div>
 
       <Panel

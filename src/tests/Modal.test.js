@@ -2,20 +2,42 @@ import { renderWithProviders } from "../utils/utils-for-tests";
 import { screen, fireEvent } from "@testing-library/react";
 import Modal from "../components/Modal";
 
-test("modal shows children and a close ");
-// test("modal shows when user enters nothing in search fields", async () => {
-//   renderWithProviders(<SearchBird />);
+const modalContainerMock = document.createElement("div");
+modalContainerMock.setAttribute("class", "modal-container");
+document.body.appendChild(modalContainerMock);
 
-//   const birdInput = screen.getByRole("textbox");
-//   const numberInput = screen.getByRole("spinbutton");
-//   const button = screen.getByRole("button");
+describe("Modal", () => {
+  test("displays the children", () => {
+    renderWithProviders(
+      <Modal onClose={jest.fn()} actionBar={null}>
+        <div>Test Content</div>
+      </Modal>
+    );
 
-//   expect(birdInput).toHaveValue("");
+    expect(screen.getByText("Test Content")).toBeInTheDocument();
+  });
 
-//   expect(numberInput).toHaveValue(null);
+  test("displays the action bar", () => {
+    renderWithProviders(
+      <Modal onClose={jest.fn()} actionBar={<button>Close</button>}>
+        <div>Test Content</div>
+      </Modal>
+    );
 
-//   user.click(button);
-//   await waitFor(() => {
-//     expect(screen.getByTestId("modal")).toBeInTheDocument();
-//   });
-// });
+    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
+  });
+
+  test("closes when modal background is clicked", () => {
+    const handleClose = jest.fn();
+
+    renderWithProviders(
+      <Modal onClose={handleClose} actionBar={null}>
+        <div>Test Content</div>
+      </Modal>
+    );
+
+    fireEvent.click(screen.getByTestId("modal-background"));
+
+    expect(handleClose).toHaveBeenCalledTimes(1);
+  });
+});
