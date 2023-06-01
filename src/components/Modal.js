@@ -11,22 +11,23 @@ function Modal({ onClose, children, actionBar }) {
   }, []);
 
   return ReactDOM.createPortal(
-    <div>
+    <div data-testid="modal">
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-gray-300 opacity-80"
+        className="fixed inset-0 bg-gray-200 opacity-80"
       ></div>
 
-      <div className="grid fixed content-center inset-0">
-        <Panel data-testid="modal" className="mx-auto" remove>
-          <div className="flex flex-col h-full text-center text-lg font-semibold">
-            {children}
-            <div className="flex justify-center mt-5 font-normal">
-              {actionBar}
-            </div>
+      <Panel
+        className="grid fixed mx-auto my-auto h-max place-content-center inset-0"
+        remove
+      >
+        <div className="flex flex-col h-full text-center text-lg font-semibold">
+          {children}
+          <div className="flex justify-center mt-5 font-normal">
+            {actionBar}
           </div>
-        </Panel>
-      </div>
+        </div>
+      </Panel>
     </div>,
     document.querySelector(".modal-container")
   );
