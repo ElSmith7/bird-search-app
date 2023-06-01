@@ -6,6 +6,10 @@ import { renderWithProviders } from "../utils/utils-for-tests";
 import Modal from "../components/Modal";
 import SearchBird from "../components/SearchBird";
 
+const modalContainerMock = document.createElement("div");
+modalContainerMock.setAttribute("class", "modal-container");
+document.body.appendChild(modalContainerMock);
+
 const handlers = [
   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
     return res(
@@ -60,4 +64,35 @@ test("inputs clear after submit", async () => {
     expect(screen.getByRole("textbox")).toHaveValue("");
     expect(screen.getByRole("spinbutton")).toHaveValue(null);
   });
+});
+test("modal shows when user enters nothing in search fields", async () => {
+  renderWithProviders(<SearchBird />);
+
+  const birdInput = screen.getByRole("textbox");
+  const numberInput = screen.getByRole("spinbutton");
+  const button = screen.getByRole("button");
+
+  expect(birdInput).toHaveValue("");
+
+  expect(numberInput).toHaveValue(null);
+
+  user.click(button);
+  await waitFor(() => {
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+  });
+});
+
+test("modal closes when OK is clicked", async () => {
+  renderWithProviders(<SearchBird />);
+
+  const button = screen.getByRole("button", { name: /Add/i });
+
+  user.click(button);
+
+  await waitFor(() => {
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+  });
+
+  user.click(screen.getByRole("button", { name: /OK/i }));
+  expect(screen.queryByTestId("modal")).not.toBeInTheDocument;
 });
