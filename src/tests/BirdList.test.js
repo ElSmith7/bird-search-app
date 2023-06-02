@@ -1,4 +1,5 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import user from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
@@ -9,6 +10,9 @@ jest.mock("../components/BirdImg", () => {
     return "Bird Img Component";
   };
 });
+const modalContainerMock = document.createElement("div");
+modalContainerMock.setAttribute("class", "modal-container");
+document.body.appendChild(modalContainerMock);
 
 const handlers = [
   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
@@ -75,4 +79,32 @@ test("renders the loader and error message when there's an error", async () => {
   expect(await screen.findByText(/error/i)).toBeInTheDocument();
   expect(loader).not.toBeInTheDocument();
   expect(screen.queryByTestId("bird")).not.toBeInTheDocument();
+});
+
+test("removes correct bird from list when delete is clicked", async () => {
+  renderWithProviders(<BirdList />);
+  await screen.findAllByTestId("bird");
+
+  const blueTit = screen.queryByRole("header", { name: /blue tit/i });
+  const blueTitRemoveButton = await screen.findByTestId("removeButton-1");
+  expect(blueTitRemoveButton).toBeInTheDocument();
+
+  user.click(blueTitRemoveButton);
+
+  await waitFor(() => {
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+  });
+
+  const deleteButton = screen.getByRole("button", { name: /delete/i });
+  expect(deleteButton).toBeInTheDocument();
+
+  user.click(deleteButton);
+
+  server.use(
+    rest.delete("http://localhost:3005/birds/1", (req, res, ctx) => {
+      return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+    })
+  );
+
+  expect(blueTit).not.toBeInTheDocument();
 });

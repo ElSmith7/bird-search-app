@@ -5,6 +5,7 @@ import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import Bird from "../components/Bird";
 
+
 const modalContainerMock = document.createElement("div");
 modalContainerMock.setAttribute("class", "modal-container");
 document.body.appendChild(modalContainerMock);
@@ -39,7 +40,7 @@ afterAll(() => server.close());
 
 const bird = {
   id: "1",
-  name: "robin",
+  name: "blue tit",
   number: "5",
 };
 test("shows bird name, sightings, remove button and bird image", async () => {
@@ -47,7 +48,7 @@ test("shows bird name, sightings, remove button and bird image", async () => {
 
   expect(
     await screen.findByRole("heading", {
-      name: "robin",
+      name: "blue tit",
     })
   ).toBeInTheDocument();
   expect(await screen.findByText("Sightings Component")).toBeInTheDocument();
