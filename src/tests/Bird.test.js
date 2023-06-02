@@ -1,6 +1,7 @@
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import Bird from "../components/Bird";
 
@@ -36,13 +37,12 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const bird = {
+  id: "1",
+  name: "robin",
+  number: "5",
+};
 test("shows bird name, sightings, remove button and bird image", async () => {
-  const bird = {
-    id: "1",
-    name: "robin",
-    number: "5",
-  };
-
   renderWithProviders(<Bird bird={bird} />);
 
   expect(
@@ -56,5 +56,13 @@ test("shows bird name, sightings, remove button and bird image", async () => {
 });
 
 test("shows modal before removal", async () => {
-  renderWithProviders(<BirdList />);
+  renderWithProviders(<Bird bird={bird} />);
+  const removeButton = await screen.findByTestId("remove button");
+  expect(removeButton).toBeInTheDocument();
+
+  user.click(removeButton);
+
+  await waitFor(() => {
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+  });
 });
