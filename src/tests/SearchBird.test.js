@@ -3,7 +3,6 @@ import user from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { renderWithProviders } from "../utils/utils-for-tests";
-import Modal from "../components/Modal";
 import SearchBird from "../components/SearchBird";
 
 const modalContainerMock = document.createElement("div");
