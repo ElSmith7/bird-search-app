@@ -1,5 +1,6 @@
-import { renderWithProviders } from "../utils/utils-for-tests";
 import { screen, fireEvent } from "@testing-library/react";
+
+import { renderWithProviders } from "../utils/utils-for-tests";
 import Modal from "../components/Modal";
 
 const modalContainerMock = document.createElement("div");
