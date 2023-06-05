@@ -27,6 +27,9 @@ const handlers = [
   rest.post("http://localhost:3005/birds", (req, res, ctx) => {
     return res(ctx.json({ id: 3, name: "robin", number: "2" }));
   }),
+  rest.delete("http://localhost:3005/birds/1", (req, res, ctx) => {
+    return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+  }),
 ];
 const server = setupServer(...handlers);
 
