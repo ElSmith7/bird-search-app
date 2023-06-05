@@ -25,10 +25,13 @@ const handlers = [
     );
   }),
   rest.post("http://localhost:3005/birds", (req, res, ctx) => {
-    return res(ctx.json({ id: 3, name: "robin", number: "2" }));
+    return res(ctx.json({ id: "3", name: "robin", number: "2" }));
   }),
   rest.delete("http://localhost:3005/birds/1", (req, res, ctx) => {
-    return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+    return res(ctx.json({ id: "1", name: "blue tit", number: "5" }));
+  }),
+  rest.patch("http://localhost:3005/birds/1", (req, res, ctx) => {
+    return res(ctx.json([{ id: "1", name: "blue tit", number: "6" }]));
   }),
 ];
 const server = setupServer(...handlers);
@@ -127,10 +130,52 @@ test("removes correct bird from list when delete is clicked", async () => {
   user.click(deleteButton);
 
   server.use(
-    rest.delete("http://localhost:3005/birds/1", (req, res, ctx) => {
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
       return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
     })
   );
 
   expect(blueTit).not.toBeInTheDocument();
+});
+
+test("sightings are updated when birds are added or subtracted", async () => {
+  renderWithProviders(<App />);
+  await screen.findAllByTestId("bird");
+
+  const minusButton = screen.getByTestId(`minus-1`);
+  const plusButton = screen.getByTestId(`plus-1`);
+
+  user.click(plusButton);
+
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(
+        ctx.json([
+          { id: "1", name: "blue tit", number: "6" },
+          { id: "2", name: "grey heron", number: "1" },
+        ])
+      );
+    })
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText(6)).toBeInTheDocument();
+  });
+
+  user.click(minusButton);
+
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(
+        ctx.json([
+          { id: "1", name: "blue tit", number: "5" },
+          { id: "2", name: "grey heron", number: "1" },
+        ])
+      );
+    })
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText(5)).toBeInTheDocument();
+  });
 });

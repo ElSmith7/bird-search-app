@@ -19,7 +19,11 @@ function Sightings({ bird }) {
 
   return (
     <div>
-      <Button symbol onClick={handleMinusSightings}>
+      <Button
+        symbol
+        data-testid={`minus-${bird.id}`}
+        onClick={handleMinusSightings}
+      >
         <AiOutlineMinus />
       </Button>
       <span
@@ -28,7 +32,11 @@ function Sightings({ bird }) {
       >
         {bird.number}
       </span>
-      <Button symbol onClick={handleAddSightings}>
+      <Button
+        symbol
+        data-testid={`plus-${bird.id}`}
+        onClick={handleAddSightings}
+      >
         <AiOutlinePlus />
       </Button>
     </div>
