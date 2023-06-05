@@ -5,7 +5,6 @@ import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import Bird from "../components/Bird";
 
-
 const modalContainerMock = document.createElement("div");
 modalContainerMock.setAttribute("class", "modal-container");
 document.body.appendChild(modalContainerMock);
@@ -52,13 +51,15 @@ test("shows bird name, sightings, remove button and bird image", async () => {
     })
   ).toBeInTheDocument();
   expect(await screen.findByText("Sightings Component")).toBeInTheDocument();
-  expect(await screen.findByTestId("remove button")).toBeInTheDocument();
+  expect(
+    await screen.findByTestId(`removeButton-${bird.id}`)
+  ).toBeInTheDocument();
   expect(await screen.findByText("Bird Img Component")).toBeInTheDocument();
 });
 
 test("shows modal before removal", async () => {
   renderWithProviders(<Bird bird={bird} />);
-  const removeButton = await screen.findByTestId("remove button");
+  const removeButton = await screen.findByTestId(`removeButton-${bird.id}`);
   expect(removeButton).toBeInTheDocument();
 
   user.click(removeButton);
