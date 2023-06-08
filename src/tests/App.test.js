@@ -31,7 +31,16 @@ const handlers = [
     return res(ctx.json({ id: "1", name: "blue tit", number: "5" }));
   }),
   rest.patch("http://localhost:3005/birds/1", (req, res, ctx) => {
-    return res(ctx.json([{ id: "1", name: "blue tit", number: "6" }]));
+    const updatedBird = { id: "1", name: "blue tit", number: req.text.number };
+
+    if (req.text.number === "6") {
+      return res(ctx.json([updatedBird]));
+    } else {
+      return res(ctx.json([{ id: "1", name: "blue tit", number: "5" }]));
+    }
+  }),
+  rest.patch("http://localhost:3005/birds/2", (req, res, ctx) => {
+    return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
   }),
 ];
 const server = setupServer(...handlers);
@@ -177,5 +186,32 @@ test("sightings are updated when birds are added or subtracted", async () => {
 
   await waitFor(() => {
     expect(screen.getByText(5)).toBeInTheDocument();
+  });
+});
+
+test("sightings cannot go below one", async () => {
+  renderWithProviders(<App />);
+  await screen.findAllByTestId("bird");
+
+  const minusButton = screen.getByTestId(`minus-2`);
+
+  expect(screen.getByText("1")).toBeInTheDocument();
+
+  user.click(minusButton);
+
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(
+        ctx.json([
+          { id: "1", name: "blue tit", number: "5" },
+          { id: "2", name: "grey heron", number: "1" },
+        ])
+      );
+    })
+  );
+
+  await waitFor(() => {
+    expect(screen.getByText("1")).toBeInTheDocument();
+    expect(screen.queryByText("0")).not.toBeInTheDocument();
   });
 });
