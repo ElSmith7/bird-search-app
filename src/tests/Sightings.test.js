@@ -1,40 +1,12 @@
 import { screen } from "@testing-library/react";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import Sightings from "../components/Sightings";
-
-// const handlers = [
-//   rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-//     return res(
-//       ctx.json([
-//         { id: "1", name: "blue tit", number: "5" },
-//         { id: "2", name: "grey heron", number: "1" },
-//       ])
-//     );
-//   }),
-//   rest.patch("http://localhost:3005/birds/1", (req, res, ctx) => {
-//     return res(
-//       ctx.json([
-//         { id: "1", name: "blue tit", number: "4" },
-//         { id: "2", name: "grey heron", number: "1" },
-//       ])
-//     );
-//   }),
-// ];
-
-// const server = setupServer(...handlers);
-
-// beforeAll(() => server.listen());
-// afterEach(() => server.resetHandlers());
-// afterAll(() => server.close());
 
 const bluetit = {
   id: "1",
   name: "blue tit",
   number: "5",
 };
-const heron = { id: "2", name: "grey heron", number: "1" };
 
 test("it shows the number of sightings, and two buttons", async () => {
   renderWithProviders(<Sightings bird={bluetit} />);
