@@ -26,7 +26,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test("render the correct number of birds", async () => {
+test("renders the correct number of birds", async () => {
   renderWithProviders(<BirdList />);
 
   const birdList = await screen.findAllByTestId("bird");
@@ -34,7 +34,7 @@ test("render the correct number of birds", async () => {
   expect(birdList).toHaveLength(2);
 });
 
-test("renders the heading with each bird's name", async () => {
+test("renders each bird's name", async () => {
   renderWithProviders(<BirdList />);
   await screen.findAllByTestId("bird");
 
@@ -48,7 +48,7 @@ test("renders the heading with each bird's name", async () => {
   }
 });
 
-test("renders the correct number for each bird", async () => {
+test("renders the correct sightings for each bird", async () => {
   renderWithProviders(<BirdList />);
   await screen.findAllByTestId("bird");
 
@@ -59,7 +59,7 @@ test("renders the correct number for each bird", async () => {
     expect(sightings).toHaveTextContent(`${number}`);
   }
 });
-test("renders the loader and error message when there's an error", async () => {
+test("shows the loader and error message when there's an error", async () => {
   renderWithProviders(<BirdList />);
 
   const loader = screen.queryByTestId("loader");

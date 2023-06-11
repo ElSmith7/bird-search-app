@@ -49,169 +49,174 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test("displays the App's heading", async () => {
-  renderWithProviders(<App />);
-  await screen.findAllByTestId("bird");
+describe("App", () => {
+  test("displays the App's heading", async () => {
+    renderWithProviders(<App />);
+    await screen.findAllByTestId("bird");
 
-  const heading = screen.getByRole("heading", { name: /bird search/i });
+    const heading = screen.getByRole("heading", { name: /bird search/i });
 
-  expect(heading).toBeInTheDocument();
-});
-
-test("displays the search bird form", async () => {
-  renderWithProviders(<App />);
-  await screen.findAllByTestId("bird");
-
-  const searchForm = screen.getByRole("textbox", { name: /bird/i });
-  expect(searchForm).toBeInTheDocument();
-});
-
-test("fetches, loads and displays birdList", async () => {
-  renderWithProviders(<App />);
-
-  const loader = screen.queryByTestId("loader");
-
-  expect(loader).toBeInTheDocument();
-
-  const birdList = await screen.findAllByTestId("bird");
-
-  expect(birdList).toHaveLength(2);
-  expect(loader).not.toBeInTheDocument();
-});
-
-test("adds new bird when form is submitted", async () => {
-  renderWithProviders(<App />);
-
-  const loader = screen.queryByTestId(/button loader/i);
-  const birdInput = screen.getByRole("textbox", { name: /bird/i });
-  const numberInput = screen.getByRole("spinbutton", {
-    name: /number/i,
-  });
-  const button = screen.getByRole("button", { name: /add/i });
-
-  await screen.findAllByTestId("bird");
-
-  user.click(birdInput);
-  user.keyboard("robin");
-  user.click(numberInput);
-  user.keyboard("2");
-  user.click(button);
-
-  expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
-
-  server.use(
-    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-      return res(
-        ctx.json([
-          { id: "1", name: "blue tit", number: "5" },
-          { id: "2", name: "grey heron", number: "1" },
-          { id: "3", name: "robin", number: "2" },
-        ])
-      );
-    })
-  );
-
-  expect(loader).not.toBeInTheDocument();
-  expect(await screen.findByRole("spinbutton")).toHaveValue(null);
-  expect(await screen.findByRole("textbox")).toHaveValue("");
-
-  expect(await screen.findByText(/robin/i)).toBeInTheDocument();
-  expect(await screen.findByText(/2/i)).toBeInTheDocument();
-});
-
-test("removes correct bird from list when delete is clicked", async () => {
-  renderWithProviders(<App />);
-  await screen.findAllByTestId("bird");
-
-  const blueTit = screen.queryByRole("header", { name: /blue tit/i });
-  const blueTitRemoveButton = await screen.findByTestId("removeButton-1");
-  expect(blueTitRemoveButton).toBeInTheDocument();
-
-  user.click(blueTitRemoveButton);
-
-  await waitFor(() => {
-    expect(screen.getByTestId("modal")).toBeInTheDocument();
+    expect(heading).toBeInTheDocument();
   });
 
-  const deleteButton = screen.getByRole("button", { name: /delete/i });
-  expect(deleteButton).toBeInTheDocument();
+  test("displays the search bird form", async () => {
+    renderWithProviders(<App />);
+    await screen.findAllByTestId("bird");
 
-  user.click(deleteButton);
-
-  server.use(
-    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-      return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
-    })
-  );
-
-  expect(blueTit).not.toBeInTheDocument();
-});
-
-test("sightings are updated when birds are added or subtracted", async () => {
-  renderWithProviders(<App />);
-  await screen.findAllByTestId("bird");
-
-  const minusButton = screen.getByTestId(`minus-1`);
-  const plusButton = screen.getByTestId(`plus-1`);
-
-  user.click(plusButton);
-
-  server.use(
-    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-      return res(
-        ctx.json([
-          { id: "1", name: "blue tit", number: "6" },
-          { id: "2", name: "grey heron", number: "1" },
-        ])
-      );
-    })
-  );
-
-  await waitFor(() => {
-    expect(screen.getByText(6)).toBeInTheDocument();
+    const searchForm = screen.getByRole("textbox", { name: /bird/i });
+    expect(searchForm).toBeInTheDocument();
   });
 
-  user.click(minusButton);
+  describe("Bird List", () => {
+    test("should fetch, load and display birdList", async () => {
+      renderWithProviders(<App />);
 
-  server.use(
-    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-      return res(
-        ctx.json([
-          { id: "1", name: "blue tit", number: "5" },
-          { id: "2", name: "grey heron", number: "1" },
-        ])
+      const loader = screen.queryByTestId("loader");
+
+      expect(loader).toBeInTheDocument();
+
+      const birdList = await screen.findAllByTestId("bird");
+
+      expect(birdList).toHaveLength(2);
+      expect(loader).not.toBeInTheDocument();
+    });
+
+    test("adds new bird on submit", async () => {
+      renderWithProviders(<App />);
+
+      const loader = screen.queryByTestId(/button loader/i);
+      const birdInput = screen.getByRole("textbox", { name: /bird/i });
+      const numberInput = screen.getByRole("spinbutton", {
+        name: /number/i,
+      });
+      const button = screen.getByRole("button", { name: /add/i });
+
+      await screen.findAllByTestId("bird");
+
+      user.click(birdInput);
+      user.keyboard("robin");
+      user.click(numberInput);
+      user.keyboard("2");
+      user.click(button);
+
+      expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
+
+      server.use(
+        rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+          return res(
+            ctx.json([
+              { id: "1", name: "blue tit", number: "5" },
+              { id: "2", name: "grey heron", number: "1" },
+              { id: "3", name: "robin", number: "2" },
+            ])
+          );
+        })
       );
-    })
-  );
 
-  await waitFor(() => {
-    expect(screen.getByText(5)).toBeInTheDocument();
+      expect(loader).not.toBeInTheDocument();
+      expect(await screen.findByRole("spinbutton")).toHaveValue(null);
+      expect(await screen.findByRole("textbox")).toHaveValue("");
+
+      expect(await screen.findByText(/robin/i)).toBeInTheDocument();
+      expect(await screen.findByText(/2/i)).toBeInTheDocument();
+    });
+
+    test("removes correct bird on delete", async () => {
+      renderWithProviders(<App />);
+      await screen.findAllByTestId("bird");
+
+      const blueTit = screen.queryByRole("header", { name: /blue tit/i });
+      const blueTitRemoveButton = await screen.findByTestId("removeButton-1");
+      expect(blueTitRemoveButton).toBeInTheDocument();
+
+      user.click(blueTitRemoveButton);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("modal")).toBeInTheDocument();
+      });
+
+      const deleteButton = screen.getByRole("button", { name: /delete/i });
+      expect(deleteButton).toBeInTheDocument();
+
+      user.click(deleteButton);
+
+      server.use(
+        rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+          return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+        })
+      );
+
+      expect(blueTit).not.toBeInTheDocument();
+    });
   });
-});
+  describe("Sightings", () => {
+    test("updates sightings on add and subtract", async () => {
+      renderWithProviders(<App />);
+      await screen.findAllByTestId("bird");
 
-test("sightings cannot go below one", async () => {
-  renderWithProviders(<App />);
-  await screen.findAllByTestId("bird");
+      const minusButton = screen.getByTestId(`minus-1`);
+      const plusButton = screen.getByTestId(`plus-1`);
 
-  const minusButton = screen.getByTestId(`minus-2`);
+      user.click(plusButton);
 
-  expect(screen.getByText("1")).toBeInTheDocument();
-
-  user.click(minusButton);
-
-  server.use(
-    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
-      return res(
-        ctx.json([
-          { id: "1", name: "blue tit", number: "5" },
-          { id: "2", name: "grey heron", number: "1" },
-        ])
+      server.use(
+        rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+          return res(
+            ctx.json([
+              { id: "1", name: "blue tit", number: "6" },
+              { id: "2", name: "grey heron", number: "1" },
+            ])
+          );
+        })
       );
-    })
-  );
 
-  await waitFor(() => {
-    expect(screen.getByText("1")).toBeInTheDocument();
-    expect(screen.queryByText("0")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText(6)).toBeInTheDocument();
+      });
+
+      user.click(minusButton);
+
+      server.use(
+        rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+          return res(
+            ctx.json([
+              { id: "1", name: "blue tit", number: "5" },
+              { id: "2", name: "grey heron", number: "1" },
+            ])
+          );
+        })
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText(5)).toBeInTheDocument();
+      });
+    });
+
+    test("sightings cannot go below one", async () => {
+      renderWithProviders(<App />);
+      await screen.findAllByTestId("bird");
+
+      const minusButton = screen.getByTestId(`minus-2`);
+
+      expect(screen.getByText("1")).toBeInTheDocument();
+
+      user.click(minusButton);
+
+      server.use(
+        rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+          return res(
+            ctx.json([
+              { id: "1", name: "blue tit", number: "5" },
+              { id: "2", name: "grey heron", number: "1" },
+            ])
+          );
+        })
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText("1")).toBeInTheDocument();
+        expect(screen.queryByText("0")).not.toBeInTheDocument();
+      });
+    });
   });
 });
