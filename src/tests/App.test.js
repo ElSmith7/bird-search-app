@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
-import { createServer } from "./server";
+import { setupServer } from "msw/lib/node";
 import App from "../App";
 
 jest.mock("../components/BirdImg", () => {
@@ -15,56 +15,37 @@ const modalContainerMock = document.createElement("div");
 modalContainerMock.setAttribute("class", "modal-container");
 document.body.appendChild(modalContainerMock);
 
-createServer([
-  {
-    path: "http://localhost:3005/birds",
-    method: "get",
-    res: () => {
-      return [
+const handlers = [
+  rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+    return res(
+      ctx.json([
         { id: "1", name: "blue tit", number: "5" },
         { id: "2", name: "grey heron", number: "1" },
-      ];
-    },
-  },
-  {
-    path: "http://localhost:3005/birds",
-    method: "post",
-    res: () => {
-      return { id: "3", name: "robin", number: "2" };
-    },
-  },
-  {
-    path: "http://localhost:3005/birds/1",
-    method: "delete",
-    res: () => {
-      return { id: "1", name: "blue tit", number: "5" };
-    },
-  },
-  {
-    path: "http://localhost:3005/birds/1",
-    method: "patch",
-    res: (req) => {
-      const updatedBird = {
-        id: "1",
-        name: "blue tit",
-        number: req.text.number,
-      };
-
-      if (req.text.number === "6") {
-        return [updatedBird];
-      } else {
-        return { id: "1", name: "blue tit", number: "5" };
-      }
-    },
-  },
-  {
-    path: "http://localhost:3005/birds/2",
-    method: "patch",
-    res: () => {
-      return { id: "2", name: "grey heron", number: "1" };
-    },
-  },
-]);
+      ])
+    );
+  }),
+  rest.post("http://localhost:3005/birds", (req, res, ctx) => {
+    return res(ctx.json({ id: "3", name: "robin", number: "2" }));
+  }),
+  rest.delete("http://localhost:3005/birds/1", (req, res, ctx) => {
+    return res(ctx.json({ id: "1", name: "blue tit", number: "5" }));
+  }),
+  rest.patch("http://localhost:3005/birds/1", (req, res, ctx) => {
+    const updatedBird = { id: "1", name: "blue tit", number: req.text.number };
+    if (req.text.number === "6") {
+      return res(ctx.json([updatedBird]));
+    } else {
+      return res(ctx.json([{ id: "1", name: "blue tit", number: "5" }]));
+    }
+  }),
+  rest.patch("http://localhost:3005/birds/2", (req, res, ctx) => {
+    return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+  }),
+];
+const server = setupServer(...handlers);
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe("App", () => {
   test("displays the App's heading", async () => {
