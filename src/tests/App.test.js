@@ -3,8 +3,8 @@ import user from "@testing-library/user-event";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
-import App from "../App";
 import { handlers } from "./mocks/handlers";
+import App from "../App";
 
 jest.mock("../components/BirdImg", () => {
   return () => {
