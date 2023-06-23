@@ -4,14 +4,9 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
 import { handlers } from "./mocks/handlers";
-import _modalContainerMock from "./mocks/modalContainer";
+import { _modalContainerMock } from "./mocks/modalContainer";
+import { _birdImgMock } from "./mocks/BirdImg";
 import App from "../App";
-
-jest.mock("../components/BirdImg", () => {
-  return () => {
-    return "Bird Img Component";
-  };
-});
 
 describe("App", () => {
   beforeEach(() => {

@@ -1,14 +1,9 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
-import _modalContainerMock from "./mocks/modalContainer";
+import { _modalContainerMock } from "./mocks/modalContainer";
+import { _birdImgMock } from "./mocks/BirdImg";
 import Bird from "../components/Bird";
-
-jest.mock("../components/BirdImg", () => {
-  return () => {
-    return "Bird Img Component";
-  };
-});
 
 const bird = {
   id: "1",

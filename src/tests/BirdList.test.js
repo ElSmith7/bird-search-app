@@ -3,13 +3,8 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
 import { handlers } from "./mocks/handlers";
+import { _birdImgMock } from "./mocks/BirdImg";
 import BirdList from "../components/BirdList";
-
-jest.mock("../components/BirdImg", () => {
-  return () => {
-    return "Bird Img Component";
-  };
-});
 
 describe("BirdList", () => {
   beforeEach(() => {
