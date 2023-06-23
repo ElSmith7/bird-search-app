@@ -3,11 +3,8 @@ import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { handlers } from "./mocks/handlers";
 import { server } from "./mocks/server";
+import _modalContainerMock from "./mocks/modalContainer";
 import SearchBird from "../components/SearchBird";
-
-const modalContainerMock = document.createElement("div");
-modalContainerMock.setAttribute("class", "modal-container");
-document.body.appendChild(modalContainerMock);
 
 describe("SearchBird", () => {
   beforeEach(() => {

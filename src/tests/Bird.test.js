@@ -1,11 +1,8 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
+import _modalContainerMock from "./mocks/modalContainer";
 import Bird from "../components/Bird";
-
-const modalContainerMock = document.createElement("div");
-modalContainerMock.setAttribute("class", "modal-container");
-document.body.appendChild(modalContainerMock);
 
 jest.mock("../components/BirdImg", () => {
   return () => {

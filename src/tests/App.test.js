@@ -4,6 +4,7 @@ import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
 import { handlers } from "./mocks/handlers";
+import _modalContainerMock from "./mocks/modalContainer";
 import App from "../App";
 
 jest.mock("../components/BirdImg", () => {
@@ -11,10 +12,6 @@ jest.mock("../components/BirdImg", () => {
     return "Bird Img Component";
   };
 });
-
-const modalContainerMock = document.createElement("div");
-modalContainerMock.setAttribute("class", "modal-container");
-document.body.appendChild(modalContainerMock);
 
 describe("App", () => {
   beforeEach(() => {
