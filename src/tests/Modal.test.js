@@ -1,27 +1,32 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../utils/utils-for-tests";
+import { _modalContainerMock } from "./mocks/modalContainer";
 import Modal from "../components/Modal";
 
-const modalContainerMock = document.createElement("div");
-modalContainerMock.setAttribute("class", "modal-container");
-document.body.appendChild(modalContainerMock);
-
-test("displays the children", () => {
+function renderModal({ onClose, actionBar, children }) {
   renderWithProviders(
-    <Modal onClose={jest.fn()} actionBar={null}>
-      <div>Test Content</div>
+    <Modal onClose={onClose} actionBar={actionBar}>
+      {children}
     </Modal>
   );
+}
+
+test("displays the children", () => {
+  renderModal({
+    onClose: jest.fn(),
+    actionBar: null,
+    children: <div>Test Content</div>,
+  });
 
   expect(screen.getByText("Test Content")).toBeInTheDocument();
 });
 
 test("displays the action bar", () => {
-  renderWithProviders(
-    <Modal onClose={jest.fn()} actionBar={<button>Close</button>}>
-      <div>Test Content</div>
-    </Modal>
-  );
+  renderModal({
+    onClose: jest.fn(),
+    actionBar: <button>Close</button>,
+    children: <div>Test Content</div>,
+  });
 
   expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
 });
@@ -29,11 +34,11 @@ test("displays the action bar", () => {
 test("closes when modal background is clicked", () => {
   const handleClose = jest.fn();
 
-  renderWithProviders(
-    <Modal onClose={handleClose} actionBar={null}>
-      <div>Test Content</div>
-    </Modal>
-  );
+  renderModal({
+    onClose: handleClose,
+    actionBar: null,
+    children: <div>Test Content</div>,
+  });
 
   fireEvent.click(screen.getByTestId("modal-background"));
 

@@ -8,12 +8,16 @@ import { _modalContainerMock } from "./mocks/modalContainer";
 import { _birdImgMock } from "./mocks/BirdImg";
 import App from "../App";
 
+function renderComponent() {
+  renderWithProviders(<App />);
+}
+
 describe("App", () => {
   beforeEach(() => {
     server.use(...handlers);
   });
   test("displays the App's heading", async () => {
-    renderWithProviders(<App />);
+    renderComponent();
     await screen.findAllByTestId("bird");
 
     const heading = screen.getByRole("heading", { name: /bird search/i });
@@ -22,7 +26,8 @@ describe("App", () => {
   });
 
   test("displays the search bird form", async () => {
-    renderWithProviders(<App />);
+    renderComponent();
+
     await screen.findAllByTestId("bird");
 
     const searchForm = screen.getByRole("textbox", { name: /bird/i });
@@ -31,7 +36,7 @@ describe("App", () => {
 
   describe("Bird List", () => {
     test("should fetch, load and display birdList", async () => {
-      renderWithProviders(<App />);
+      renderComponent();
 
       const loader = screen.queryByTestId("loader");
 
@@ -44,7 +49,9 @@ describe("App", () => {
     });
 
     test("adds new bird on submit", async () => {
-      renderWithProviders(<App />);
+      renderComponent();
+
+      await screen.findAllByTestId("bird");
 
       const loader = screen.queryByTestId(/button loader/i);
       const birdInput = screen.getByRole("textbox", { name: /bird/i });
@@ -84,7 +91,8 @@ describe("App", () => {
     });
 
     test("removes correct bird on delete", async () => {
-      renderWithProviders(<App />);
+      renderComponent();
+
       await screen.findAllByTestId("bird");
 
       const blueTit = screen.queryByRole("header", { name: /blue tit/i });
@@ -113,7 +121,8 @@ describe("App", () => {
   });
   describe("Sightings", () => {
     test("updates sightings on add and subtract", async () => {
-      renderWithProviders(<App />);
+      renderComponent();
+
       await screen.findAllByTestId("bird");
 
       const minusButton = screen.getByTestId(`minus-1`);
@@ -155,7 +164,8 @@ describe("App", () => {
     });
 
     test("sightings cannot go below one", async () => {
-      renderWithProviders(<App />);
+      renderComponent();
+
       await screen.findAllByTestId("bird");
 
       const minusButton = screen.getByTestId(`minus-2`);

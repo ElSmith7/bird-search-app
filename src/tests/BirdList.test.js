@@ -6,12 +6,16 @@ import { handlers } from "./mocks/handlers";
 import { _birdImgMock } from "./mocks/BirdImg";
 import BirdList from "../components/BirdList";
 
+function renderComponent() {
+  renderWithProviders(<BirdList />);
+}
+
 describe("BirdList", () => {
   beforeEach(() => {
     server.use(...handlers);
   });
   test("renders the correct number of birds", async () => {
-    renderWithProviders(<BirdList />);
+    renderComponent();
 
     const birdList = await screen.findAllByTestId("bird");
 
@@ -19,7 +23,7 @@ describe("BirdList", () => {
   });
 
   test("renders each bird's name", async () => {
-    renderWithProviders(<BirdList />);
+    renderComponent();
     await screen.findAllByTestId("bird");
 
     let birds = ["blue tit", "grey heron"];
@@ -33,7 +37,8 @@ describe("BirdList", () => {
   });
 
   test("renders the correct sightings for each bird", async () => {
-    renderWithProviders(<BirdList />);
+    renderComponent();
+
     await screen.findAllByTestId("bird");
 
     let numbers = ["5", "1"];
@@ -44,7 +49,7 @@ describe("BirdList", () => {
     }
   });
   test("shows the loader and error message when there's an error", async () => {
-    renderWithProviders(<BirdList />);
+    renderComponent();
 
     const loader = screen.queryByTestId("loader");
 

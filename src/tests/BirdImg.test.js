@@ -20,10 +20,14 @@ const mockLoadedResponse = {
   },
 };
 
+function renderComponent() {
+  renderWithProviders(<BirdImg name="robin" />);
+}
+
 test("renders bird image", async () => {
   axios.get.mockResolvedValueOnce(mockLoadedResponse);
 
-  renderWithProviders(<BirdImg name="robin" />);
+  renderComponent();
   mockAllIsIntersecting(true);
   const birdImage = screen.getByRole("img");
 
@@ -37,7 +41,7 @@ test("renders bird image", async () => {
 });
 
 test("green placeholder displays when loading", async () => {
-  renderWithProviders(<BirdImg name="robin" />);
+  renderComponent();
 
   const placeholder = screen.getByTestId("background");
   expect(placeholder).toHaveStyle(`background: #22C55E`);
@@ -52,7 +56,7 @@ test("green placeholder displays when loading", async () => {
 });
 
 test("orange placeholder displays on api error", async () => {
-  renderWithProviders(<BirdImg name="robin" />);
+  renderComponent();
 
   const placeholder = screen.getByTestId("background");
   expect(placeholder).toHaveStyle(`background: #22C55E`);

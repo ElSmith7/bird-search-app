@@ -6,12 +6,16 @@ import { server } from "./mocks/server";
 import { _modalContainerMock } from "./mocks/modalContainer";
 import SearchBird from "../components/SearchBird";
 
+function renderComponent() {
+  renderWithProviders(<SearchBird />);
+}
+
 describe("SearchBird", () => {
   beforeEach(() => {
     server.use(...handlers);
   });
   test("it shows two inputs and a button", () => {
-    renderWithProviders(<SearchBird />);
+    renderComponent();
 
     const birdInput = screen.getByRole("textbox");
     const numberInput = screen.getByRole("spinbutton");
@@ -23,7 +27,7 @@ describe("SearchBird", () => {
   });
 
   test("inputs clear after submit", async () => {
-    renderWithProviders(<SearchBird />);
+    renderComponent();
 
     const birdInput = screen.getByRole("textbox");
     const numberInput = screen.getByRole("spinbutton");
@@ -47,7 +51,7 @@ describe("SearchBird", () => {
     });
   });
   test("modal shows when user enters nothing in search fields", async () => {
-    renderWithProviders(<SearchBird />);
+    renderComponent();
 
     const birdInput = screen.getByRole("textbox");
     const numberInput = screen.getByRole("spinbutton");
@@ -64,7 +68,7 @@ describe("SearchBird", () => {
   });
 
   test("modal closes when OK is clicked", async () => {
-    renderWithProviders(<SearchBird />);
+    renderComponent();
 
     const button = screen.getByRole("button", { name: /Add/i });
 

@@ -5,14 +5,18 @@ import { _modalContainerMock } from "./mocks/modalContainer";
 import { _birdImgMock } from "./mocks/BirdImg";
 import Bird from "../components/Bird";
 
+const renderComponent = (bird) => {
+  renderWithProviders(<Bird bird={bird} />);
+};
+
 const bird = {
   id: "1",
   name: "blue tit",
   number: "5",
 };
-test("shows bird name, remove button and bird image", async () => {
-  renderWithProviders(<Bird bird={bird} />);
 
+test("shows bird name, remove button and bird image", async () => {
+  renderComponent(bird);
   expect(
     await screen.findByRole("heading", {
       name: "blue tit",
@@ -24,7 +28,7 @@ test("shows bird name, remove button and bird image", async () => {
   expect(await screen.findByText("Bird Img Component")).toBeInTheDocument();
 });
 test("shows the number of sightings, and two buttons", async () => {
-  renderWithProviders(<Bird bird={bird} />);
+  renderComponent(bird);
   const sightings = await screen.findByTestId(`${bird.number}`);
   const minusButton = await screen.findByTestId("minus-1");
   const plusButton = await screen.findByTestId("plus-1");
@@ -35,7 +39,7 @@ test("shows the number of sightings, and two buttons", async () => {
   expect(plusButton).toBeInTheDocument();
 });
 test("shows modal before removal", async () => {
-  renderWithProviders(<Bird bird={bird} />);
+  renderComponent(bird);
   const removeButton = await screen.findByTestId(`removeButton-${bird.id}`);
   expect(removeButton).toBeInTheDocument();
 
