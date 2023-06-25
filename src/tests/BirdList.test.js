@@ -21,7 +21,7 @@ test("renders the correct number of birds", async () => {
   expect(birdList).toHaveLength(2);
 });
 
-test("renders each bird's name", async () => {
+test("renders each bird's correct name", async () => {
   renderComponent();
   await screen.findAllByTestId("bird");
 
@@ -50,7 +50,7 @@ test("renders the correct sightings for each bird", async () => {
 test("shows the loader and error message when there's an error", async () => {
   renderComponent();
 
-  const loader = screen.queryByTestId("loader");
+  const loader = screen.getByTestId("loader");
 
   expect(loader).toBeInTheDocument();
   server.use(
@@ -61,6 +61,6 @@ test("shows the loader and error message when there's an error", async () => {
   expect(loader).toBeInTheDocument();
 
   expect(await screen.findByText(/error/i)).toBeInTheDocument();
-  expect(loader).not.toBeInTheDocument();
+  expect(screen.queryByTestId("loader")).not.toBeInTheDocument();
   expect(screen.queryByTestId("bird")).not.toBeInTheDocument();
 });

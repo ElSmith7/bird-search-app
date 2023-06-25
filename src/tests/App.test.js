@@ -37,14 +37,12 @@ test("displays the search bird form", async () => {
 test("should fetch, load and display birdList", async () => {
   renderComponent();
 
-  const loader = screen.queryByTestId("loader");
-
-  expect(loader).toBeInTheDocument();
+  expect(screen.getByTestId("loader")).toBeInTheDocument();
 
   const birdList = await screen.findAllByTestId("bird");
 
   expect(birdList).toHaveLength(2);
-  expect(loader).not.toBeInTheDocument();
+  expect(screen.queryByTestId("loader")).not.toBeInTheDocument();
 });
 
 test("adds new bird on submit", async () => {
@@ -52,7 +50,6 @@ test("adds new bird on submit", async () => {
 
   await screen.findAllByTestId("bird");
 
-  const loader = screen.queryByTestId(/button loader/i);
   const birdInput = screen.getByRole("textbox", { name: /bird/i });
   const numberInput = screen.getByRole("spinbutton", {
     name: /number/i,
@@ -81,7 +78,6 @@ test("adds new bird on submit", async () => {
     })
   );
 
-  expect(loader).not.toBeInTheDocument();
   expect(await screen.findByRole("spinbutton")).toHaveValue(null);
   expect(await screen.findByRole("textbox")).toHaveValue("");
 

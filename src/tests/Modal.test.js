@@ -1,4 +1,5 @@
-import { screen, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import user from "@testing-library/user-event";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { _modalContainerMock } from "./mocks/modalContainer";
 import Modal from "../components/Modal";
@@ -40,7 +41,7 @@ test("closes when modal background is clicked", () => {
     children: <div>Test Content</div>,
   });
 
-  fireEvent.click(screen.getByTestId("modal-background"));
+  user.click(screen.getByTestId("modal-background"));
 
   expect(handleClose).toHaveBeenCalledTimes(1);
 });
