@@ -1,5 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
+import { act } from "@testing-library/react";
 import axios from "axios";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdImg from "../components/BirdImg";
@@ -58,17 +59,15 @@ test("green placeholder displays when loading", async () => {
 test("orange placeholder displays on api error", async () => {
   renderComponent();
 
-  const placeholder = screen.getByTestId("background");
-  expect(placeholder).toHaveStyle(`background: #22C55E`);
-
   axios.get.mockImplementationOnce(() => {
     throw 500;
   });
+
   mockAllIsIntersecting(true);
 
-  const birdImage = screen.getByRole("img");
   await waitFor(() => {
-    expect(birdImage).toHaveAttribute("src", "");
-    expect(placeholder).toHaveStyle(`background: #ea580c`);
+    expect(screen.getByTestId("background")).toHaveStyle(`background: #ea580c`);
   });
+  const birdImage = screen.getByRole("img");
+  expect(birdImage).toHaveAttribute("src", "");
 });

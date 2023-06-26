@@ -1,5 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import { act } from "@testing-library/react";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { _modalContainerMock } from "./mocks/modalContainer";
 import { _birdImgMock } from "./mocks/BirdImg";
@@ -43,7 +44,7 @@ test("shows modal before removal", async () => {
   const removeButton = await screen.findByTestId(`removeButton-${bird.id}`);
   expect(removeButton).toBeInTheDocument();
 
-  user.click(removeButton);
+  act(() => user.click(removeButton));
 
   await waitFor(() => {
     expect(screen.getByTestId("modal")).toBeInTheDocument();

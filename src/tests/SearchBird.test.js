@@ -1,5 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import { act } from "@testing-library/react";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { handlers } from "./mocks/handlers";
 import { server } from "./mocks/server";
@@ -33,15 +34,20 @@ test("inputs clear after submit", async () => {
   const numberInput = screen.getByRole("spinbutton");
   const button = screen.getByRole("button");
 
-  user.click(birdInput);
-  user.keyboard("robin");
+  act(() => {
+    user.click(birdInput);
+    user.keyboard("robin");
+  });
+
   expect(birdInput).toHaveValue("robin");
 
-  user.click(numberInput);
-  user.keyboard("2");
+  act(() => {
+    user.click(numberInput);
+    user.keyboard("2");
+  });
   expect(numberInput).toHaveValue(2);
 
-  user.click(button);
+  act(() => user.click(button));
   expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
 
   await waitFor(() => {
@@ -61,7 +67,7 @@ test("modal shows when user enters nothing in search fields", async () => {
 
   expect(numberInput).toHaveValue(null);
 
-  user.click(button);
+  act(() => user.click(button));
   await waitFor(() => {
     expect(screen.getByTestId("modal")).toBeInTheDocument();
   });
@@ -72,12 +78,12 @@ test("modal closes when OK is clicked", async () => {
 
   const button = screen.getByRole("button", { name: /Add/i });
 
-  user.click(button);
+  act(() => user.click(button));
 
   await waitFor(() => {
     expect(screen.getByTestId("modal")).toBeInTheDocument();
   });
 
-  user.click(screen.getByRole("button", { name: /OK/i }));
+  act(() => user.click(screen.getByRole("button", { name: /OK/i })));
   expect(screen.queryByTestId("modal")).not.toBeInTheDocument;
 });

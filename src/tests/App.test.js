@@ -1,5 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import { act } from "@testing-library/react";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
@@ -58,11 +59,13 @@ test("adds new bird on submit", async () => {
 
   await screen.findAllByTestId("bird");
 
-  user.click(birdInput);
-  user.keyboard("robin");
-  user.click(numberInput);
-  user.keyboard("2");
-  user.click(button);
+  act(() => {
+    user.click(birdInput);
+    user.keyboard("robin");
+    user.click(numberInput);
+    user.keyboard("2");
+    user.click(button);
+  });
 
   expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
 
@@ -94,7 +97,9 @@ test("removes correct bird on delete", async () => {
   const blueTitRemoveButton = await screen.findByTestId("removeButton-1");
   expect(blueTitRemoveButton).toBeInTheDocument();
 
-  user.click(blueTitRemoveButton);
+  act(() => {
+    user.click(blueTitRemoveButton);
+  });
 
   await waitFor(() => {
     expect(screen.getByTestId("modal")).toBeInTheDocument();
@@ -103,7 +108,9 @@ test("removes correct bird on delete", async () => {
   const deleteButton = screen.getByRole("button", { name: /delete/i });
   expect(deleteButton).toBeInTheDocument();
 
-  user.click(deleteButton);
+  act(() => {
+    user.click(deleteButton);
+  });
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {
@@ -122,7 +129,9 @@ test("updates sightings on add and subtract", async () => {
   const minusButton = screen.getByTestId(`minus-1`);
   const plusButton = screen.getByTestId(`plus-1`);
 
-  user.click(plusButton);
+  act(() => {
+    user.click(plusButton);
+  });
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {
@@ -139,7 +148,9 @@ test("updates sightings on add and subtract", async () => {
     expect(screen.getByText(6)).toBeInTheDocument();
   });
 
-  user.click(minusButton);
+  act(() => {
+    user.click(minusButton);
+  });
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {
@@ -166,7 +177,9 @@ test("sightings cannot go below one", async () => {
 
   expect(screen.getByText("1")).toBeInTheDocument();
 
-  user.click(minusButton);
+  act(() => {
+    user.click(minusButton);
+  });
 
   server.use(
     rest.get("http://localhost:3005/birds", (req, res, ctx) => {
