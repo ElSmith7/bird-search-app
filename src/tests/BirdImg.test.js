@@ -1,6 +1,5 @@
 import { screen, waitFor } from "@testing-library/react";
 import { mockAllIsIntersecting } from "react-intersection-observer/test-utils";
-import { act } from "@testing-library/react";
 import axios from "axios";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import BirdImg from "../components/BirdImg";
@@ -26,7 +25,7 @@ function renderComponent() {
 }
 
 test("renders bird image", async () => {
-  axios.get.mockResolvedValueOnce(mockLoadedResponse);
+  await axios.get.mockResolvedValueOnce(mockLoadedResponse);
 
   renderComponent();
   mockAllIsIntersecting(true);
@@ -47,7 +46,7 @@ test("green placeholder displays when loading", async () => {
   const placeholder = screen.getByTestId("background");
   expect(placeholder).toHaveStyle(`background: #22C55E`);
 
-  axios.get.mockResolvedValueOnce(mockLoadedResponse);
+  await axios.get.mockResolvedValueOnce(mockLoadedResponse);
   mockAllIsIntersecting(true);
 
   const birdImage = screen.getByRole("img");
@@ -56,12 +55,10 @@ test("green placeholder displays when loading", async () => {
   });
 });
 
-test("orange placeholder displays on api error", async () => {
+test("orange placeholder displays on API error", async () => {
   renderComponent();
 
-  axios.get.mockImplementationOnce(() => {
-    throw 500;
-  });
+  await axios.get.mockRejectedValueOnce(new Error("API error"));
 
   mockAllIsIntersecting(true);
 
