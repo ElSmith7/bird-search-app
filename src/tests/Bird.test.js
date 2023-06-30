@@ -43,7 +43,7 @@ test("shows modal before removal", async () => {
   const removeButton = await screen.findByTestId(`removeButton-${bird.id}`);
   expect(removeButton).toBeInTheDocument();
 
-  await waitFor(async () => {
+  await waitFor(() => {
     user.click(removeButton);
   });
 

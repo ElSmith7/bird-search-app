@@ -1,6 +1,5 @@
 import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { act } from "@testing-library/react";
 import { rest } from "msw";
 import { renderWithProviders } from "../utils/utils-for-tests";
 import { server } from "./mocks/server";
@@ -59,7 +58,7 @@ test("adds new bird on submit", async () => {
 
   await screen.findAllByTestId("bird");
 
-  act(() => {
+  await waitFor(() => {
     user.click(birdInput);
     user.keyboard("robin");
     user.click(numberInput);
@@ -94,21 +93,17 @@ test("removes correct bird on delete", async () => {
   await screen.findAllByTestId("bird");
 
   const blueTit = screen.queryByRole("header", { name: /blue tit/i });
-  const blueTitRemoveButton = await screen.findByTestId("removeButton-1");
-  expect(blueTitRemoveButton).toBeInTheDocument();
+  const blueTitRemoveButton = screen.getByTestId("removeButton-1");
 
-  act(() => {
+  await waitFor(() => {
     user.click(blueTitRemoveButton);
   });
 
-  await waitFor(() => {
-    expect(screen.getByTestId("modal")).toBeInTheDocument();
-  });
+  expect(await screen.findByTestId("modal")).toBeInTheDocument();
 
   const deleteButton = screen.getByRole("button", { name: /delete/i });
-  expect(deleteButton).toBeInTheDocument();
 
-  act(() => {
+  await waitFor(() => {
     user.click(deleteButton);
   });
 
@@ -129,7 +124,7 @@ test("updates sightings on add and subtract", async () => {
   const minusButton = screen.getByTestId(`minus-1`);
   const plusButton = screen.getByTestId(`plus-1`);
 
-  act(() => {
+  await waitFor(() => {
     user.click(plusButton);
   });
 
@@ -144,11 +139,9 @@ test("updates sightings on add and subtract", async () => {
     })
   );
 
-  await waitFor(() => {
-    expect(screen.getByText(6)).toBeInTheDocument();
-  });
+  expect(await screen.findByText(6)).toBeInTheDocument();
 
-  act(() => {
+  await waitFor(() => {
     user.click(minusButton);
   });
 
@@ -163,9 +156,7 @@ test("updates sightings on add and subtract", async () => {
     })
   );
 
-  await waitFor(() => {
-    expect(screen.getByText(5)).toBeInTheDocument();
-  });
+  expect(await screen.findByText(5)).toBeInTheDocument();
 });
 
 test("sightings cannot go below one", async () => {
@@ -177,7 +168,7 @@ test("sightings cannot go below one", async () => {
 
   expect(screen.getByText("1")).toBeInTheDocument();
 
-  act(() => {
+  await waitFor(() => {
     user.click(minusButton);
   });
 
@@ -192,8 +183,6 @@ test("sightings cannot go below one", async () => {
     })
   );
 
-  await waitFor(() => {
-    expect(screen.getByText("1")).toBeInTheDocument();
-    expect(screen.queryByText("0")).not.toBeInTheDocument();
-  });
+  expect(await screen.findByText("1")).toBeInTheDocument();
+  expect(screen.queryByText("0")).not.toBeInTheDocument();
 });
