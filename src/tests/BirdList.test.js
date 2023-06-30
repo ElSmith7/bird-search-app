@@ -28,7 +28,7 @@ test("renders each bird's correct name", async () => {
   let birds = ["blue tit", "grey heron"];
 
   for (let bird of birds) {
-    const headings = await screen.findByRole("heading", {
+    const headings = screen.getByRole("heading", {
       name: new RegExp(`${bird}`),
     });
     expect(headings).toHaveTextContent(`${bird}`);
@@ -43,7 +43,7 @@ test("renders the correct sightings for each bird", async () => {
   let numbers = ["5", "1"];
 
   for (let number of numbers) {
-    const sightings = await screen.findByTestId(`${number}`);
+    const sightings = screen.getByTestId(`${number}`);
     expect(sightings).toHaveTextContent(`${number}`);
   }
 });

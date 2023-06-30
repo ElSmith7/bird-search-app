@@ -34,27 +34,28 @@ test("inputs clear after submit", async () => {
   const numberInput = screen.getByRole("spinbutton");
   const button = screen.getByRole("button");
 
-  act(() => {
+  await waitFor(() => {
     user.click(birdInput);
     user.keyboard("robin");
-  });
 
-  expect(birdInput).toHaveValue("robin");
-
-  act(() => {
     user.click(numberInput);
     user.keyboard("2");
   });
+
+  expect(birdInput).toHaveValue("robin");
   expect(numberInput).toHaveValue(2);
 
-  act(() => user.click(button));
-  expect(await screen.findByTestId("button-loader")).toBeInTheDocument();
+  await waitFor(() => {
+    user.click(button);
+  });
+
+  expect(screen.getByTestId("button-loader")).toBeInTheDocument();
 
   await waitFor(() => {
     expect(screen.queryByTestId("button-loader")).not.toBeInTheDocument();
-    expect(screen.getByRole("textbox")).toHaveValue("");
-    expect(screen.getByRole("spinbutton")).toHaveValue(null);
   });
+  expect(screen.getByRole("textbox")).toHaveValue("");
+  expect(screen.getByRole("spinbutton")).toHaveValue(null);
 });
 test("modal shows when user enters nothing in search fields", async () => {
   renderComponent();
@@ -67,10 +68,11 @@ test("modal shows when user enters nothing in search fields", async () => {
 
   expect(numberInput).toHaveValue(null);
 
-  act(() => user.click(button));
   await waitFor(() => {
-    expect(screen.getByTestId("modal")).toBeInTheDocument();
+    user.click(button);
   });
+
+  expect(screen.getByTestId("modal")).toBeInTheDocument();
 });
 
 test("modal closes when OK is clicked", async () => {
@@ -78,12 +80,13 @@ test("modal closes when OK is clicked", async () => {
 
   const button = screen.getByRole("button", { name: /Add/i });
 
-  act(() => user.click(button));
+  await waitFor(() => user.click(button));
+
+  expect(screen.getByTestId("modal")).toBeInTheDocument();
 
   await waitFor(() => {
-    expect(screen.getByTestId("modal")).toBeInTheDocument();
+    user.click(screen.getByRole("button", { name: /OK/i }));
   });
 
-  act(() => user.click(screen.getByRole("button", { name: /OK/i })));
   expect(screen.queryByTestId("modal")).not.toBeInTheDocument;
 });
