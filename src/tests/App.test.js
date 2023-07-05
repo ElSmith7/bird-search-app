@@ -83,7 +83,10 @@ test("adds new bird on submit", async () => {
   expect(await screen.findByRole("spinbutton")).toHaveValue(null);
   expect(await screen.findByRole("textbox")).toHaveValue("");
 
-  expect(await screen.findByText(/robin/i)).toBeInTheDocument();
+  expect(
+    await screen.findByRole("heading", { name: /robin/i })
+  ).toBeInTheDocument();
+
   expect(await screen.findByText(/2/i)).toBeInTheDocument();
 });
 
@@ -92,7 +95,6 @@ test("removes correct bird on delete", async () => {
 
   await screen.findAllByTestId("bird");
 
-  const blueTit = screen.queryByRole("header", { name: /blue tit/i });
   const blueTitRemoveButton = screen.getByTestId("removeButton-1");
 
   await waitFor(() => {
@@ -113,7 +115,11 @@ test("removes correct bird on delete", async () => {
     })
   );
 
-  expect(blueTit).not.toBeInTheDocument();
+  await waitFor(() => {
+    expect(
+      screen.queryByRole("heading", { name: /blue tit/i })
+    ).not.toBeInTheDocument();
+  });
 });
 
 test("updates sightings on add and subtract", async () => {
@@ -185,4 +191,40 @@ test("sightings cannot go below one", async () => {
 
   expect(await screen.findByText("1")).toBeInTheDocument();
   expect(screen.queryByText("0")).not.toBeInTheDocument();
+});
+
+test("removes correct bird on delete after minus has been clicked when sightings is 1", async () => {
+  server.use(
+    rest.delete("http://localhost:3005/birds/2", (req, res, ctx) => {
+      return res(ctx.json([{ id: "2", name: "grey heron", number: "1" }]));
+    })
+  );
+
+  renderComponent();
+
+  await screen.findAllByTestId("bird");
+
+  const heron = screen.queryByRole("heading", { name: /grey heron/i });
+  const minusButton = screen.getByTestId(`minus-2`);
+
+  await waitFor(() => {
+    user.click(minusButton);
+  });
+
+  expect(await screen.findByTestId("modal")).toBeInTheDocument();
+
+  const deleteButton = screen.getByRole("button", { name: /delete/i });
+
+  await waitFor(() => {
+    user.click(deleteButton);
+  });
+
+  server.use(
+    rest.get("http://localhost:3005/birds", (req, res, ctx) => {
+      return res(ctx.json([{ id: "1", name: "blue tit", number: "5" }]));
+    })
+  );
+  await waitFor(() => {
+    expect(heron).not.toBeInTheDocument();
+  });
 });
