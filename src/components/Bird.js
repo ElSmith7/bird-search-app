@@ -28,7 +28,11 @@ function Bird({ bird }) {
         Keep
       </Button>
 
-      <Button secondary onClick={handleDelete}>
+      <Button
+        secondary
+        loading={removeBirdResults.isLoading}
+        onClick={handleDelete}
+      >
         Delete
       </Button>
     </>
@@ -63,7 +67,6 @@ function Bird({ bird }) {
           <Button
             onClick={handleRemoveBird}
             remove
-            loading={removeBirdResults.isLoading}
             data-testid={`removeButton-${bird.id}`}
           >
             <RxCross2 />
