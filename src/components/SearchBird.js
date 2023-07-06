@@ -123,7 +123,7 @@ function SearchBird() {
             </Button>
           </div>
         </form>
-        <h6 className="hidden mt-1 mb-2 text-xs text-slate-700/50 md:block">
+        <h6 className="hidden mt-1 mb-2 ml-1 text-xs text-slate-700/50 md:block">
           Add a new bird and the number you've seen or search your list!
         </h6>
       </Panel>

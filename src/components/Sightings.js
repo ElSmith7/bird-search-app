@@ -9,8 +9,7 @@ import Button from "./Button";
 function Sightings({ bird }) {
   const [showModal, setShowModal] = useState(false);
   const [removeBird, removeBirdResults] = useRemoveBirdMutation();
-  const [updateSightings, { isLoading: isUpdating }] =
-    useUpdateSightingsMutation();
+  const [updateSightings] = useUpdateSightingsMutation();
 
   const handleMinusSightings = () => {
     if (bird.number === "1") {
