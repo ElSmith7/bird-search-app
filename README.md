@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Bird Search
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Bird Search! It's a neat little app designed to easily manage and update your list of different birds you've seen. With Bird Search, you can view bird images, their names, and keep track of the number of sightings which can be updated as you continue your bird watching adventures!
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Lazy Loading:** Bird Search utilizes lazy loading to optimize performance and enhance user experience by loading bird images only when necessary.
+- **Comprehensive Testing:** The app is thoroughly tested using React Testing Library and Jest, covering unit, integrated, and end-to-end testing scenarios.
 
-### `npm start`
+## Availability
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The code for Bird Search is provided for showcasing purposes only and is not intended for public use.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Dependencies
 
-### `npm test`
+Some of the libraries and plugins used:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [react](https://reactjs.org/): A JavaScript library for building user interfaces.
+- [@reduxjs/toolkit](https://redux-toolkit.js.org/): A package for efficient state management in React applications.
+- [json-server](https://www.npmjs.com/package/json-server): A simple JSON-based local server for development and prototyping.
+- [axios](https://www.npmjs.com/package/axios): A promise-based HTTP client for making API requests.
+- [react-intersection-observer](https://www.npmjs.com/package/react-intersection-observer): A React wrapper for the Intersection Observer API.
+- [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/): A testing utility for testing React components.
+- [msw](https://mswjs.io/): A library for mocking HTTP requests during testing.
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To review and evaluate Bird Search, please follow the instructions below:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```shell
+git clone https://github.com/ElSmith7/bird-search-app.git
+```
 
-### `npm run eject`
+2. Navigate to the project directory:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```shell
+cd bird-search-app
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Install the required dependencies:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```shell
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Usage
 
-## Learn More
+1. Start the local server:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```shell
+npm run start-server
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Launch the application:
 
-### Code Splitting
+```shell
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Open your web browser and navigate to `http://localhost:3000` to access Bird Search.
 
-### Analyzing the Bundle Size
+## Bird Data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Bird Search utilizes a local `db.json` server to store bird data. The `db.json` file contains a list of birds with their corresponding IDs, names, and sighting counts.
 
-### Making a Progressive Web App
+```json
+{
+  "birds": [
+    {
+      "id": "oUHpK5t7IUtDjiJd9woGp",
+      "name": "blue tit",
+      "number": "4"
+    },
+    {
+      "id": "1vrfrgDk4Uzh0nv6zRFof",
+      "name": "grey heron",
+      "number": "1"
+    }
+  ]
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Please note that this is a simplified example for showcasing purposes.
 
-### Advanced Configuration
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for taking a look at my Bird Search app! I am open to feedback and eager to learn and improve my work so feel free to drop a comment!
