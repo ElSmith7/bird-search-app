@@ -50,7 +50,7 @@ npm install
 1. Start the local server:
 
 ```shell
-npm run start-server
+npm run start:server
 ```
 
 2. Launch the application:
