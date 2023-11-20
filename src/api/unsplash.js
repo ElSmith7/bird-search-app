@@ -6,7 +6,7 @@ async function fetchBirdImg(name) {
 
     {
       headers: {
-        Authorization: "Client-ID 5PsYTLSHQtmbDPMDzBrgVtrP0yT_fZ8s2aoCzLzJa6c",
+        Authorization: `Client-ID ${process.env.REACT_APP_UNSPLASH_API_KEY}`,
       },
       params: { query: `${name}` },
     }
